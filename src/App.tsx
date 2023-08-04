@@ -1,5 +1,5 @@
 const App = () => {
-  return <></>;
+  return <>SmartFlock</>;
 };
 
 export default App;
