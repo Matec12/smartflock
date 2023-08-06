@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useResponsive } from "@/hooks";
 import { useCollapseDrawer } from "@/hooks";
-import { Logo } from "@/components/Logo";
-import { Drawer } from "@/components/UI/Drawer";
+import { Logo } from "@/components/Global";
+import { Drawer } from "@/components/UI";
 import CollapseButton from "./components/CollapseButton";
 import SidebarAccount from "./components/SidebarAccount";
 import SidebarNavSection from "./components/SidebarNavSection";
@@ -46,7 +46,7 @@ const DashboardSidebar = ({
       onCloseSidebar();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, isOpenSidebar]);
+  }, [pathname]);
 
   const renderContent = (
     <div className="flex min-h-screen flex-col overflow-y-auto">

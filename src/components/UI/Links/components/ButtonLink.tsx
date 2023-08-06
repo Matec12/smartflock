@@ -1,7 +1,7 @@
 import * as React from "react";
-import { UnstyledLink, UnstyledLinkProps } from "./UnstyledLink";
+import { UnstyledLinkProps, UnstyledLink } from "..";
+import { ButtonVariant } from "../..";
 import { clsxm } from "@/lib/utils";
-import { ButtonVariant } from "../../Buttons";
 
 type ButtonLinkProps = {
   variant?: keyof typeof ButtonVariant;

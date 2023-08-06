@@ -1,6 +1,5 @@
-import { Card, CardBody, CardTitle } from "@/components/UI/Cards";
-import { Paragraph } from "@/components/UI/Typography";
-import { Logo } from "@/components/Logo";
+import { Logo } from "@/components/Global";
+import { Card, CardBody, CardTitle, Paragraph } from "@/components/UI";
 import { LoginForm } from "./components/LoginForm";
 
 const Login = () => {

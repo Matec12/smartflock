@@ -1,20 +1,20 @@
-import { useLocation } from "react-router-dom";
+import { Form, useLocation } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useResetPasswordMutation } from "@/api/auth";
 import {
-  Form,
+  FormGroup,
   FormField,
   FormItem,
   FormLabel,
   FormControl,
-  FormMessage
-} from "@/components/UI/Forms";
-import { FormGroup, InputPassword } from "@/components/UI/Forms";
-import { Button } from "@/components/UI/Buttons";
-import { PrimaryLink } from "@/components/UI/Links";
-import { Paragraph } from "@/components/UI/Typography";
+  InputPassword,
+  FormMessage,
+  Button,
+  Paragraph,
+  PrimaryLink
+} from "@/components/UI";
 import { clsxm, passwordValidator } from "@/lib/utils";
 
 const ResetPasswordSchema = z

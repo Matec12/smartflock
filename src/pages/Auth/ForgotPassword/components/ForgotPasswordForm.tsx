@@ -1,19 +1,19 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Form, useForm } from "react-hook-form";
 import { useForgotPasswordMutation } from "@/api/auth";
 import {
-  Form,
+  FormGroup,
   FormField,
   FormItem,
   FormLabel,
   FormControl,
-  FormMessage
-} from "@/components/UI/Forms";
-import { FormGroup, Input } from "@/components/UI/Forms";
-import { Button } from "@/components/UI/Buttons";
-import { PrimaryLink } from "@/components/UI/Links";
-import { Paragraph } from "@/components/UI/Typography";
+  Input,
+  FormMessage,
+  Button,
+  Paragraph,
+  PrimaryLink
+} from "@/components/UI";
 import { clsxm } from "@/lib/utils";
 
 const ForgotPasswordSchema = z.object({

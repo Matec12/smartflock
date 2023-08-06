@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
+import { ButtonLink } from "@/components/UI";
 import { ListItemIconStyle, ListItemStyle, ListItemTextStyle } from "./style";
-import { ButtonLink } from "@/components/UI/Links";
 import { isExternalLink } from "@/lib/layout";
 import { clsxm } from "@/lib/utils";
 

@@ -1,4 +1,4 @@
-import { IconButton } from "@/components/UI/Buttons";
+import { IconButton } from "@/components/UI";
 import { clsxm } from "@/lib/utils";
 
 interface ICollapseButtonProps {

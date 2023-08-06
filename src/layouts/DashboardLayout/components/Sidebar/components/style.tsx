@@ -1,7 +1,6 @@
 import type { ElementType, ComponentPropsWithoutRef } from "react";
-import { Button } from "@/components/UI/Buttons";
 import { PolymorphicProps } from "@/types/types";
-import { H6 } from "@/components/UI/Typography";
+import { Button, H6 } from "@/components/UI";
 import { clsxm } from "@/lib/utils";
 
 const defaultElement = Button;
@@ -26,7 +25,7 @@ export const ListItemStyle = <E extends ElementType = typeof defaultElement>({
   return (
     <Component
       className={clsxm(
-        "relative z-50 mb-1 h-12 w-full justify-start rounded-none pl-6 pr-3 capitalize text-secondary hover:bg-primary-5",
+        "relative z-50 mb-1 h-12 w-full justify-start rounded-none pl-6 pr-3 capitalize text-secondary hover:bg-primary-10",
         { "text-primary": activeRoot },
         { "text-primary": activeSub },
         { "h-10": subItem },
@@ -79,7 +78,7 @@ export const ListSubheaderStyle = ({
   return (
     <H6
       className={clsxm(
-        "pt-6 pl-4 pb-2 text-sm font-semibold text-body transition-opacity",
+        "pt-6 pl-4 pb-2 md:text-sm font-semibold text-body transition-opacity",
         className
       )}
       {...rest}

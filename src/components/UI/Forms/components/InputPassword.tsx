@@ -1,9 +1,6 @@
 import { ReactNode, forwardRef, useState } from "react";
 import { Icon } from "@iconify/react";
-import { Input } from "./Input";
-import { InputGroup } from "./InputGroup";
-import { InputGroupAddon } from "./InputGroupAddon";
-import { InputGroupText } from "./InputGroupText";
+import { InputGroup, Input, InputGroupAddon, InputGroupText } from "..";
 import { clsxm } from "@/lib/utils";
 
 type InputPasswordProps = {

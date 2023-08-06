@@ -5,46 +5,46 @@ export const SidebarConfig: SidebarConfigProps[] = [
       {
         title: "Overview",
         icon: "icon-park-twotone:home",
-        path: "/dashboard/home",
+        path: "/dashboard/overview",
         permissions: [1, 2, 3, 4]
       }
     ]
   },
-  {
-    subheader: "System Data",
-    items: [
-      {
-        title: "Speciality",
-        icon: "maki:doctor",
-        path: "/dashboard/system-data/speciality",
-        permissions: [2]
-      },
-      {
-        title: "Modality",
-        icon: "ph:test-tube-duotone",
-        path: "/dashboard/system-data/modality",
-        permissions: [2]
-      },
-      {
-        title: "Study Description",
-        icon: "ic:twotone-description",
-        path: "/dashboard/system-data/study_description",
-        permissions: [2]
-      }
-    ]
-  },
+  // {
+  //   subheader: "System Data",
+  //   items: [
+  //     {
+  //       title: "Speciality",
+  //       icon: "maki:doctor",
+  //       path: "/dashboard/system-data/speciality",
+  //       permissions: [2]
+  //     },
+  //     {
+  //       title: "Modality",
+  //       icon: "ph:test-tube-duotone",
+  //       path: "/dashboard/system-data/modality",
+  //       permissions: [2]
+  //     },
+  //     {
+  //       title: "Study Description",
+  //       icon: "ic:twotone-description",
+  //       path: "/dashboard/system-data/study_description",
+  //       permissions: [2]
+  //     }
+  //   ]
+  // },
   {
     subheader: "User Management",
     items: [
       {
-        title: "Specialists",
-        icon: "ic:twotone-people-alt",
+        title: "Organizations",
+        icon: "icon-park-twotone:hospital-four",
         path: "/dashboard/users/specialists",
         permissions: [2]
       },
       {
-        title: "Clients",
-        icon: "icon-park-twotone:hospital-four",
+        title: "Staffs",
+        icon: "ic:twotone-people-alt",
         path: "/dashboard/users/clients",
         permissions: [2]
       }

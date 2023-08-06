@@ -1,7 +1,6 @@
 import { useAuth } from "@/hooks";
-import { UnstyledLink } from "@/components/UI/Links";
 import MyAvatar from "@/components/MyAvatar";
-import { H6, Paragraph } from "@/components/UI/Typography";
+import { UnstyledLink, H6, Paragraph } from "@/components/UI";
 import { clsxm } from "@/lib/utils";
 
 interface ISidebarAccountProps {

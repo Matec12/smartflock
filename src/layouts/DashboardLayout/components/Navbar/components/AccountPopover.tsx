@@ -2,8 +2,7 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useAuth } from "@/hooks";
 import MyAvatar from "@/components/MyAvatar";
-import { UnstyledLink } from "@/components/UI/Links";
-import { Paragraph } from "@/components/UI/Typography";
+import { Paragraph, UnstyledLink } from "@/components/UI";
 import { clsxm } from "@/lib/utils";
 
 const AccountPopover = () => {

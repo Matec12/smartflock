@@ -54,7 +54,7 @@ export const useVerifyEmailMutation = () => {
     onSuccess: (data) => {
       toast.success(data.payload.message);
       setTimeout(() => {
-        window.location.pathname = "/dashboard/home";
+        window.location.pathname = "/dashboard/overview";
       }, 2000);
     },
     onError: (error: RequestError) => {

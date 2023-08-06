@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks";
-import { Loader } from "@/components/UI/Loader";
+import { Loader } from "@/components/UI";
 import AuthLayout from "@/layouts/AuthLayout";
 import Login from "@/pages/Auth/Login";
 import VerifyEmail from "@/pages/Auth/VerifyEmail";

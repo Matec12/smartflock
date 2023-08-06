@@ -1,5 +1,6 @@
 import { useResponsive, useCollapseDrawer, useOffSetTop } from "@/hooks";
 import { IconButton } from "@/components/UI/Buttons";
+import { Logo } from "@/components/Global";
 import AccountPopover from "./components/AccountPopover";
 import { clsxm } from "@/lib/utils";
 
@@ -26,11 +27,14 @@ const DashboardNavbar = ({ onOpenSidebar }: IDashboardNavbarProps) => {
     >
       <div className="relative flex min-h-full items-center px-6 lg:px-10">
         {!isDesktop && (
-          <IconButton
-            onClick={onOpenSidebar}
-            className="mr-2 text-primary"
-            icon="eva:menu-2-fill"
-          />
+          <div>
+            <IconButton
+              onClick={onOpenSidebar}
+              className="mr-2 text-primary"
+              icon="eva:menu-2-fill"
+            />
+            <Logo />
+          </div>
         )}
 
         <div className="flex-grow" />

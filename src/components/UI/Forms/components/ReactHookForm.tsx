@@ -8,7 +8,7 @@ import {
   FormProvider,
   useFormContext
 } from "react-hook-form";
-import { Label } from "./Label";
+import { Label } from "..";
 import { clsxm } from "@/lib/utils";
 
 const Form = FormProvider;

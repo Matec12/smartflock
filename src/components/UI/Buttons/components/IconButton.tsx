@@ -1,5 +1,5 @@
 import { Icon, IconifyIcon } from "@iconify/react";
-import { ButtonProps, Button } from "./Button";
+import { Button, ButtonProps } from "..";
 import { clsxm } from "@/lib/utils";
 
 type IconButtonProps = {

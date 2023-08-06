@@ -37,7 +37,7 @@ const ResetPassword = Loadable(
 );
 
 // DASHBOARD
-const Home = Loadable(lazy(() => import("../pages/Home")));
+const Overview = Loadable(lazy(() => import("../pages/Overview")));
 /**
  * App Router
  */
@@ -77,7 +77,7 @@ export const Router = () => {
         </AuthGuard>
       ),
       children: [
-        { path: "home", element: <Home /> },
+        { path: "overview", element: <Overview /> },
         {
           path: "verify-email/:token",
           element: (

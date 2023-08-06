@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Slider from "react-slick";
-import { Image } from "@/components/UI/Image";
+import { Image } from "@/components/UI";
 
 const CAROUSEL = [
   {

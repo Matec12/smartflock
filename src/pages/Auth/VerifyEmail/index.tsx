@@ -3,11 +3,15 @@ import { useLocation } from "react-router-dom";
 import { useCountdown } from "usehooks-ts";
 import { useAuth } from "@/hooks";
 import { useResendEmailMutation, useVerifyEmailMutation } from "@/api/auth";
-import { Logo } from "@/components/Logo";
-import { Card, CardBody, CardTitle } from "@/components/UI/Cards";
-import { Paragraph } from "@/components/UI/Typography";
-import { Button } from "@/components/UI/Buttons";
-import { Loader } from "@/components/UI/Loader";
+import { Logo } from "@/components/Global";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Paragraph,
+  Button,
+  Loader
+} from "@/components/UI";
 
 const VerifyEmail = () => {
   const { pathname } = useLocation();

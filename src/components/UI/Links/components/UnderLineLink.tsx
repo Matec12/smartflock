@@ -1,5 +1,5 @@
 import * as React from "react";
-import { UnstyledLink, UnstyledLinkProps } from "./UnstyledLink";
+import { UnstyledLinkProps, UnstyledLink } from "..";
 import { clsxm } from "@/lib/utils";
 
 const UnderLineLink = React.forwardRef<HTMLAnchorElement, UnstyledLinkProps>(

@@ -1,6 +1,6 @@
 import React from "react";
-import { H4 } from "../../Typography";
 import { clsxm } from "@/lib/utils";
+import { H4 } from "../..";
 
 export interface ICardTitleProps extends React.ComponentPropsWithRef<"h4"> {}
 

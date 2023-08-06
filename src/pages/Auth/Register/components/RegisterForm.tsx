@@ -1,27 +1,24 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useAuth } from "@/hooks";
 import {
-  Form,
+  FormGroup,
   FormField,
   FormItem,
   FormLabel,
   FormControl,
-  FormMessage
-} from "@/components/UI/Forms";
-import {
-  FormGroup,
   Input,
+  FormMessage,
   InputPassword,
-  CustomInput
-} from "@/components/UI/Forms";
-import { Button } from "@/components/UI/Buttons";
-import { PrimaryLink } from "@/components/UI/Links";
-import { Paragraph } from "@/components/UI/Typography";
+  CustomInput,
+  Button,
+  Paragraph,
+  PrimaryLink
+} from "@/components/UI";
 import { clsxm, passwordValidator } from "@/lib/utils";
 
 const RegisterSchema = z
@@ -63,7 +60,7 @@ const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setIsLoading(true);
     _register(values)
-      .then(() => navigate("/dashboard/home"))
+      .then(() => navigate("/dashboard/overview"))
       .catch(
         (err: RequestError) =>
           err.response && toast.error(err?.response?.data.error)
