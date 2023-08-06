@@ -99,7 +99,7 @@ const LoginForm = () => {
               <FormItem>
                 <div className="flex justify-between items-center">
                   <FormLabel>Password</FormLabel>
-                  <PrimaryLink href="/auth/reset-password">
+                  <PrimaryLink href="/auth/forgot-password">
                     <small>Forgot Password?</small>
                   </PrimaryLink>
                 </div>

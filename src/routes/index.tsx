@@ -29,6 +29,12 @@ function Loadable<T extends JSX.IntrinsicAttributes>(Component: React.FC<T>) {
 const Register = Loadable(lazy(() => import("../pages/Auth/Register")));
 const Login = Loadable(lazy(() => import("../pages/Auth/Login")));
 const VerifyEmail = Loadable(lazy(() => import("../pages/Auth/VerifyEmail")));
+const ForgotPassword = Loadable(
+  lazy(() => import("../pages/Auth/ForgotPassword"))
+);
+const ResetPassword = Loadable(
+  lazy(() => import("../pages/Auth/ResetPassword"))
+);
 
 // DASHBOARD
 const Home = Loadable(lazy(() => import("../pages/Home")));
@@ -52,20 +58,15 @@ export const Router = () => {
         {
           path: "register",
           element: <Register />
+        },
+        {
+          path: "forgot-password",
+          element: <ForgotPassword />
+        },
+        {
+          path: "reset-password/:token",
+          element: <ResetPassword />
         }
-        // {
-        //   path: "forgot-password",
-        //   element: <ForgotPassword />
-        // },
-        // {
-        //   path: "reset-password/:token",
-        //   element: <ResetPassword />
-        // }
-        // {
-        //   path: "/",
-        //   element: <Navigate to="auth/login" replace />,
-        //   index: true
-        // }
       ]
     },
     {

@@ -25,6 +25,10 @@ type RegisterPayload = {
   confirmPassword: string;
 };
 
+type ResetPasswordPayload = {
+  token: string;
+} & Pick<RegisterPayload, "password" | "confirmPassword">;
+
 type LoginPayload = {
   email: string;
   password: string;

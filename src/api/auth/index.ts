@@ -74,7 +74,7 @@ export const useVerifyEmailMutation = () => {
 const _forgotPasswordRequest = async (
   payload: Pick<RegisterPayload, "email">
 ): Promise<ApiResponse> => {
-  const { data } = await axios.post("/user/forgot_password", payload);
+  const { data } = await axios.post("password", payload);
   return data;
 };
 /**
@@ -88,7 +88,7 @@ export const useForgotPasswordMutation = () => {
       toast.success(data.payload.message);
     },
     onError: (error: RequestError) => {
-      toast.error(error.response?.data?.error);
+      error?.response && toast.error(error.response?.data?.error);
     }
   });
 
@@ -102,10 +102,9 @@ export const useForgotPasswordMutation = () => {
  */
 
 const _resetPasswordRequest = async (
-  token: string,
-  payload?: Pick<RegisterPayload, "password" | "confirmPassword">
+  payload: ResetPasswordPayload
 ): Promise<ApiResponse> => {
-  const { data } = await axios.post(`/user/reset_password/${token}`, payload);
+  const { data } = await axios.post(`password/reset`, payload);
   return data;
 };
 /**
@@ -114,14 +113,7 @@ const _resetPasswordRequest = async (
  */
 
 export const useResetPasswordMutation = () => {
-  const resetPasswordMutation = useMutation({
-    mutationFn: ({
-      token,
-      payload
-    }: {
-      token: string;
-      payload?: Pick<RegisterPayload, "password" | "confirmPassword">;
-    }) => _resetPasswordRequest(token, payload),
+  const resetPasswordMutation = useMutation(_resetPasswordRequest, {
     onSuccess: (data) => {
       toast.success(data.payload.message);
       setTimeout(() => {
@@ -129,7 +121,7 @@ export const useResetPasswordMutation = () => {
       }, 2000);
     },
     onError: (error: RequestError) => {
-      toast.error(error.response?.data?.error);
+      error?.response && toast.error(error.response?.data?.error);
     }
   });
 
