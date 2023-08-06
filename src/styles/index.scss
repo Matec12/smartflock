@@ -40,7 +40,7 @@ $hue: 128;
 
   // form control
   .form-control {
-    @apply block w-full rounded-lg border border-solid border-gray-300
+    @apply block w-full rounded-md border border-solid border-gray-300
   bg-card bg-clip-padding
   py-2 px-4 text-base font-normal
   leading-6 text-body transition-[border-color,_box-shadow] duration-150 ease-in-out placeholder:text-sm placeholder:text-placeholder placeholder:opacity-80

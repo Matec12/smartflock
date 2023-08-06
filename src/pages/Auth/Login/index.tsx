@@ -5,7 +5,7 @@ import { LoginForm } from "./components/LoginForm";
 
 const Login = () => {
   return (
-    <Card className="min-h-[450px] w-full max-w-md rounded-l-2xl px-4 max-md:shadow-none max-md:dark:bg-transparent md:w-3/4 lg:w-10/12">
+    <Card className="min-h-[450px] w-full max-w-md md:px-4 max-md:shadow-none max-md:dark:bg-transparent md:w-3/4 lg:w-10/12">
       <CardBody className="py-12">
         <div className="text-center w-full mb-5">
           <Logo className="text-base" />

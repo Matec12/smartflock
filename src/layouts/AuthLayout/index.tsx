@@ -44,7 +44,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         ))}
       </Slider>
 
-      <section className="z-50 mx-auto flex h-full min-h-screen w-full basis-3/5 flex-col items-center justify-center overflow-y-scroll  py-14 xl:w-4/5">
+      <section className="z-50 mx-auto flex h-full min-h-screen w-full basis-3/5 flex-col items-center justify-center overflow-y-scroll py-14 xl:w-4/5 px-2">
         {children ? children : <Outlet />}
       </section>
     </main>
