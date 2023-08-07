@@ -20,7 +20,7 @@ const Activity = () => {
 
   const { data: mydata, isLoading: isFetching } =
     useGetCurrentUserActivitiesQuery(userFilters);
-  const { data, isLoading } = useGetAllActivitiesQuery(allFilters);
+  const { data, isLoading } = useGetAllActivitiesQuery(user, allFilters);
 
   const activities = {
     User: (

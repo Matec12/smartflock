@@ -2,6 +2,7 @@ import axios from "..";
 import { useQuery } from "@tanstack/react-query";
 import { Activity, GetActivityParams } from "./types";
 import { buildUrlWithParams } from "@/lib/utils";
+import { User, UserRole } from "../auth/types";
 
 /**
  *
@@ -19,13 +20,17 @@ const _getAllActivitiesRequest = async (
   return data;
 };
 
-export const useGetAllActivitiesQuery = (params?: GetActivityParams) =>
+export const useGetAllActivitiesQuery = (
+  user: User,
+  params?: GetActivityParams
+) =>
   useQuery({
     queryKey: [
       "activities",
       { dateFrom: params?.dateFrom, dateTo: params?.dateTo }
     ],
-    queryFn: () => _getAllActivitiesRequest({ ...params })
+    queryFn: () => _getAllActivitiesRequest({ ...params }),
+    enabled: user.role === UserRole.OrgAdmin
   });
 
 /**
