@@ -1,24 +1,8 @@
-import { Toaster } from "react-hot-toast";
-import { Router } from "./routes";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
 
-function App() {
-  return (
-    <>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            padding: "16px",
-            borderRadius: "4px",
-            maxWidth: "100%"
-          }
-        }}
-      />
-
-      <Router />
-    </>
-  );
+export function App() {
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -4,10 +4,10 @@ import { clsxm } from "@/lib/utils";
 
 const defaultElement = "ol";
 
-type IBreadCrumbProps<E extends ElementType = typeof defaultElement> =
+type BreadCrumbListProps<E extends ElementType = typeof defaultElement> =
   PolymorphicProps<E>;
 
-const BreadCrumbList = ({ as, className, children }: IBreadCrumbProps) => {
+const BreadCrumbList = ({ as, className, children }: BreadCrumbListProps) => {
   const Component = as ?? defaultElement;
   return (
     <nav className="breadcrumb block">

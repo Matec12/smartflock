@@ -1,17 +1,14 @@
-export { type ICardProps, default as Card } from "./components/Card";
+export { type CardProps, default as Card } from "./components/Card";
 export {
-  type ICardHeaderProps,
+  type CardHeaderProps,
   default as CardHeader
 } from "./components/CardHeader";
 export {
-  type ICardTitleProps,
+  type CardTitleProps,
   default as CardTitle
 } from "./components/CardTitle";
+export { type CardBodyProps, default as CardBody } from "./components/CardBody";
 export {
-  type ICardBodyProps,
-  default as CardBody
-} from "./components/CardBody";
-export {
-  type ICardFooterProps,
+  type CardFooterProps,
   default as CardFooter
 } from "./components/CardFooter";

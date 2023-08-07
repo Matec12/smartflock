@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Navigate, useLocation, useRoutes } from "react-router-dom";
+import { Navigate, createBrowserRouter, useLocation } from "react-router-dom";
 import { Loader } from "@/components/UI/Loader";
 import { AuthGuard, GuestGuard } from "@/guards";
 import { AuthLayout, DashboardLayout } from "@/layouts";
@@ -38,56 +38,58 @@ const ResetPassword = Loadable(
 
 // DASHBOARD
 const Overview = Loadable(lazy(() => import("../pages/Overview")));
+const Activity = Loadable(lazy(() => import("../pages/Activity")));
+
 /**
  * App Router
  */
-export const Router = () => {
-  return useRoutes([
-    {
-      path: "auth",
-      element: (
-        <GuestGuard>
-          <AuthLayout />
-        </GuestGuard>
-      ),
-      children: [
-        {
-          path: "login",
-          element: <Login />
-        },
-        {
-          path: "register",
-          element: <Register />
-        },
-        {
-          path: "forgot-password",
-          element: <ForgotPassword />
-        },
-        {
-          path: "reset-password/:token",
-          element: <ResetPassword />
-        }
-      ]
-    },
-    {
-      path: "dashboard",
-      element: (
-        <AuthGuard>
-          <DashboardLayout />
-        </AuthGuard>
-      ),
-      children: [
-        { path: "overview", element: <Overview /> },
-        {
-          path: "verify-email/:token",
-          element: (
-            <GuestGuard>
-              <VerifyEmail />
-            </GuestGuard>
-          )
-        }
-      ]
-    },
-    { path: "/", element: <Navigate to="/auth/login" replace /> }
-  ]);
-};
+export const router = createBrowserRouter([
+  {
+    path: "auth",
+    element: (
+      <GuestGuard>
+        <AuthLayout />
+      </GuestGuard>
+    ),
+    children: [
+      {
+        path: "login",
+        element: <Login />
+      },
+      {
+        path: "register",
+        element: <Register />
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />
+      },
+      {
+        path: "reset-password/:token",
+        element: <ResetPassword />
+      }
+    ]
+  },
+  {
+    path: "dashboard",
+    element: (
+      <AuthGuard>
+        <DashboardLayout />
+      </AuthGuard>
+    ),
+    children: [
+      { path: "overview", element: <Overview /> },
+      { path: "activity", element: <Activity /> },
+      {
+        path: "verify-email/:token",
+        element: (
+          <GuestGuard>
+            <VerifyEmail />
+          </GuestGuard>
+        )
+      }
+    ]
+  },
+  { path: "/", element: <Navigate to="/auth/login" replace /> },
+  { path: "*", element: <Navigate to="/auth/login" replace /> }
+]);

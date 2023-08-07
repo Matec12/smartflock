@@ -4,10 +4,10 @@ import { clsxm } from "@/lib/utils";
 
 const defaultElement = "li";
 
-type IBreadCrumbItemProps<E extends ElementType = typeof defaultElement> =
+type BreadCrumbItemProps<E extends ElementType = typeof defaultElement> =
   PolymorphicProps<E> & { active?: boolean };
 
-const BreadCrumbItem = ({ as, children, active }: IBreadCrumbItemProps) => {
+const BreadCrumbItem = ({ as, children, active }: BreadCrumbItemProps) => {
   const Component = as ?? defaultElement;
 
   return (

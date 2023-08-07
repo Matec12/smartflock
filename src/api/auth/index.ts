@@ -1,6 +1,7 @@
 import axios from "..";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
+import { RegisterPayload, ResetPasswordPayload } from "./types";
 
 /**
  * communicates with resend email service.
@@ -14,6 +15,7 @@ const _resendEmailRequest = async (
   const { data } = await axios.post("users/resend-verification-token", payload);
   return data;
 };
+
 /**
  * mutation wrapper hook for request
  * @returns

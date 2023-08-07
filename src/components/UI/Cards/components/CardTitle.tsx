@@ -2,10 +2,10 @@ import React from "react";
 import { clsxm } from "@/lib/utils";
 import { H4 } from "../..";
 
-export interface ICardTitleProps extends React.ComponentPropsWithRef<"h4"> {}
+export interface CardTitleProps extends React.ComponentPropsWithRef<"h4"> {}
 
-const CardTitle = React.forwardRef<HTMLHeadingElement, ICardTitleProps>(
-  ({ className, children, ...rest }: ICardTitleProps, ref) => {
+const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
+  ({ className, children, ...rest }, ref) => {
     return (
       <H4
         ref={ref}

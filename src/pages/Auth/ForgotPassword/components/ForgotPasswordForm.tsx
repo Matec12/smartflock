@@ -1,8 +1,9 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useForgotPasswordMutation } from "@/api/auth";
 import {
+  Form,
   FormGroup,
   FormField,
   FormItem,
@@ -79,7 +80,7 @@ const ForgotPasswordForm = () => {
         </FormGroup>
       </form>
       <Paragraph className="text-center text-sm">
-        Return to <PrimaryLink href="/auth/register">Login</PrimaryLink>
+        Return to <PrimaryLink href="/auth/login">Login</PrimaryLink>
       </Paragraph>
     </Form>
   );

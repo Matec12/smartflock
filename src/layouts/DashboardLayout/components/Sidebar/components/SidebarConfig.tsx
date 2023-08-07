@@ -71,9 +71,9 @@ export const SidebarConfig: SidebarConfigProps[] = [
     subheader: "Log",
     items: [
       {
-        title: "Activity Log",
+        title: "Activity",
         icon: "icon-park-twotone:log",
-        path: "/dashboard/activity_log",
+        path: "/dashboard/activity",
         permissions: [1, 2, 3, 4]
       }
     ]

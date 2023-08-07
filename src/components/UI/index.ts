@@ -7,3 +7,7 @@ export * from "./Links";
 export * from "./Loader";
 export * from "./Typography";
 export * from "./Cards";
+export * from "./Table";
+export * from "./Table/components/TableToolbar";
+export * from "./Table/components/TablePagination";
+export * from "./Table/components/TableMoreMenu";

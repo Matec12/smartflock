@@ -1,10 +1,10 @@
-enum UserRole {
-  "organization_admin",
-  "organization_staff",
-  "admin"
+export enum UserRole {
+  OrgAdmin = "organization_admin",
+  OrgStaff = "organization_staff",
+  Admin = "admin"
 }
 
-interface User {
+export interface User {
   id: string;
   email: string;
   username: string;
@@ -16,7 +16,7 @@ interface User {
   organizationId: string;
 }
 
-type RegisterPayload = {
+export type RegisterPayload = {
   username: string;
   fullname: string;
   email: string;
@@ -25,11 +25,11 @@ type RegisterPayload = {
   confirmPassword: string;
 };
 
-type ResetPasswordPayload = {
+export type ResetPasswordPayload = {
   token: string;
 } & Pick<RegisterPayload, "password" | "confirmPassword">;
 
-type LoginPayload = {
+export type LoginPayload = {
   email: string;
   password: string;
 };

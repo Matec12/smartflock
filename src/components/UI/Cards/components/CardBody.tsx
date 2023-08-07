@@ -1,10 +1,10 @@
 import React from "react";
 import { clsxm } from "@/lib/utils";
 
-export interface ICardBodyProps extends React.ComponentPropsWithRef<"div"> {}
+export interface CardBodyProps extends React.ComponentPropsWithRef<"div"> {}
 
-const CardBody = React.forwardRef<HTMLDivElement, ICardBodyProps>(
-  ({ className, children, ...rest }: ICardBodyProps, ref) => {
+const CardBody = React.forwardRef<HTMLDivElement, CardBodyProps>(
+  ({ className, children, ...rest }, ref) => {
     return (
       <div
         ref={ref}
