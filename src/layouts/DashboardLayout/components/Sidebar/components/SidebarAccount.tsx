@@ -25,9 +25,9 @@ const SidebarAccount = ({ isCollapse }: ISidebarAccountProps) => {
             hidden: isCollapse
           })}
         >
-          <H6 className="text-ellipsis text-base">{user?.fullname}</H6>
+          <H6 className="text-ellipsis text-base">{user?.username}</H6>
           <Paragraph className="text-ellipsis text-xs capitalize text-secondary">
-            {user?.role}
+            {user?.organizationName}
           </Paragraph>
         </div>
       </div>

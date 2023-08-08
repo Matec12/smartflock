@@ -20,11 +20,10 @@ const _getCyclesRequest = async (): Promise<
  * @param user
  * @returns
  */
-export const useGetCyclesQuery = (user: User) =>
+export const useGetCyclesQuery = () =>
   useQuery({
     queryKey: ["cycles"],
-    queryFn: () => _getCyclesRequest(),
-    enabled: isOrganization(user)
+    queryFn: () => _getCyclesRequest()
   });
 
 /**

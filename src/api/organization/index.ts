@@ -1,7 +1,12 @@
 import axios from "..";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Organization } from "./types";
-import { RegisterPayload, User, UserRole } from "../auth/types";
+import {
+  RegisterPayload,
+  User,
+  isAdmin,
+  isOrganizationAdmin
+} from "../auth/types";
 import { toast } from "react-hot-toast";
 
 /**
@@ -20,11 +25,11 @@ const _getOrganizationsRequest = async (): Promise<
  * @param user
  * @returns
  */
-export const useGetOrganizationsQuery = (user: User) =>
+export const useGetOrganizationsQuery = (user: User | null) =>
   useQuery({
     queryKey: ["organizations"],
     queryFn: () => _getOrganizationsRequest(),
-    enabled: user.role === UserRole.Admin
+    enabled: user ? isAdmin(user) : false
   });
 
 // ====================================
@@ -54,7 +59,7 @@ export const useAdminGetOrganizationsDetailsQuery = (
   useQuery({
     queryKey: ["organization", organization],
     queryFn: () => _adminGetOrganizationsDetailsRequest(organization),
-    enabled: user.role === UserRole.Admin
+    enabled: user ? isAdmin(user) : false
   });
 
 // ====================================
@@ -79,7 +84,7 @@ export const useOrgGetOrganizationsDetailsQuery = (user: User) =>
   useQuery({
     queryKey: ["organization"],
     queryFn: () => _orgGetOrganizationsDetailsRequest(),
-    enabled: user.role === UserRole.OrgAdmin
+    enabled: user ? isOrganizationAdmin(user) : false
   });
 
 // ====================================
@@ -163,10 +168,11 @@ const _getOrganizationStaffsRequest = async (): Promise<
  * @param
  * @returns
  */
-export const useGetOrganizationsStaffsQuery = () =>
+export const useGetOrganizationsStaffsQuery = (user: User | null) =>
   useQuery({
     queryKey: ["staffs"],
-    queryFn: () => _getOrganizationStaffsRequest()
+    queryFn: () => _getOrganizationStaffsRequest(),
+    enabled: user ? isOrganizationAdmin(user) : false
   });
 
 // ====================================

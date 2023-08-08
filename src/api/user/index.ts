@@ -2,7 +2,7 @@ import axios from "..";
 import { useQuery } from "@tanstack/react-query";
 import { buildUrlWithParams } from "@/lib/utils";
 import { GetUserParams } from "./types";
-import { User, UserRole } from "../auth/types";
+import { User, isAdmin } from "../auth/types";
 
 /**
  * admin get all users
@@ -23,9 +23,9 @@ const _getUsersRequest = async (
  * @param user
  * @returns
  */
-export const useGetUsersQuery = (user: User, params?: GetUserParams) =>
+export const useGetUsersQuery = (user: User | null, params?: GetUserParams) =>
   useQuery({
     queryKey: ["users", { ...params }],
     queryFn: () => _getUsersRequest({ ...params }),
-    enabled: user.role === UserRole.Admin
+    enabled: user ? isAdmin(user) : false
   });

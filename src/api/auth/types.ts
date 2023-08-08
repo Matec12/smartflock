@@ -4,9 +4,6 @@ export enum UserRole {
   Admin = "admin"
 }
 
-export const isOrganization = (user: User) =>
-  user.role === UserRole.OrgAdmin || user.role === UserRole.OrgStaff;
-
 export interface User {
   id: string;
   email: string;
@@ -41,3 +38,14 @@ export type LoginPayload = {
   email: string;
   password: string;
 };
+
+export const isOrganization = (user: User) =>
+  user.role === UserRole.OrgAdmin || user.role === UserRole.OrgStaff;
+
+export const isAdmin = (user: User) => user.role === UserRole.Admin;
+
+export const isOrganizationAdmin = (user: User) =>
+  user.role === UserRole.OrgAdmin;
+
+export const isOrganizationStaff = (user: User) =>
+  user.role === UserRole.OrgStaff;

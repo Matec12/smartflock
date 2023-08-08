@@ -33,7 +33,7 @@ const AccountPopover = () => {
           <div className="flex w-full items-center justify-start gap-3 border-b border-dashed px-4 py-2">
             <MyAvatar />
             <div>
-              <Paragraph className="text-sm">{user?.fullname}</Paragraph>
+              <Paragraph className="text-sm">{user?.username}</Paragraph>
               <Paragraph className="text-xs capitalize text-gray-500">
                 {user?.role}
               </Paragraph>
