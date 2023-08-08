@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useResponsive } from "@/hooks";
+import { useAuth, useResponsive } from "@/hooks";
 import { useCollapseDrawer } from "@/hooks";
 import { Logo } from "@/components/Global";
 import { Drawer } from "@/components/UI";
@@ -20,14 +20,14 @@ const DashboardSidebar = ({
   onCloseSidebar
 }: IDashboardSidebarProps) => {
   const { pathname } = useLocation();
-  // const { user } = useAuth();
+  const { user } = useAuth();
 
   const responsiveConfig = useResponsive();
 
-  // const privilegedSidebar = SidebarConfig?.map((section) => ({
-  //   ...section,
-  //   items: section.items.filter((item) => item.permissions?.includes(accType))
-  // })).filter((section) => section.items.length > 0);
+  const privilegedSidebar = SidebarConfig?.map((section) => ({
+    ...section,
+    items: section.items.filter((item) => item.role?.includes(user?.role!))
+  })).filter((section) => section.items.length > 0);
 
   const isDesktop =
     responsiveConfig.lg === true || responsiveConfig.xl === true;
@@ -70,7 +70,7 @@ const DashboardSidebar = ({
       </div>
 
       <SidebarNavSection
-        sidebarConfig={SidebarConfig}
+        sidebarConfig={privilegedSidebar}
         isCollapse={isCollapse}
       />
 

@@ -25,25 +25,6 @@ type ApiResponse<T extends ApiPayload = ApiPayload> = {
 
 type RequestError = { response: { data: ApiResponse<null> } };
 
-/****************************************************
- *
- *                    NAV
- *
- ***************************************************/
-
-type SidebarConfigProps = {
-  subheader: string;
-  items: NavItemProps[];
-};
-
-type NavItemProps = {
-  title: string;
-  path: string;
-  icon?: string;
-  permissions?: number[];
-  children?: NavItemProps[];
-};
-
 type SelectOptions = {
   value: string | number;
   label: string;
