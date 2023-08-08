@@ -12,8 +12,26 @@ export type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   ComponentPropsWithoutRef<E> & PolymorphicAsProp<E>
 >;
 
-export enum UserRole {
-  org_admin = "organization_admin",
-  org_staff = "organization_staff",
-  admin = "admin"
+export enum BadgeVariant {
+  Ghost = "ghost",
+  Outlined = "outlined",
+  Filled = "filled"
+}
+
+export enum BadgeColor {
+  Primary = "primary",
+  Secondary = "secondary",
+  Success = "success",
+  Danger = "danger",
+  Info = "info",
+  Warning = "warning"
+}
+
+export enum ButtonVariant {
+  Primary = "primary",
+  Secondary = "secondary",
+  Danger = "danger",
+  Success = "success",
+  Info = "info",
+  Warning = "warning"
 }

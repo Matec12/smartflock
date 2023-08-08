@@ -1,4 +1,4 @@
-import { Form, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -41,8 +41,8 @@ const ResetPasswordSchema = z
   });
 
 const ResetPasswordForm = () => {
-  const { pathname } = useLocation();
-  const token = pathname.split("/")[3];
+  const params = useParams();
+  const { token } = params;
   const { mutate: reset, isLoading } = useResetPasswordMutation();
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
@@ -51,7 +51,7 @@ const ResetPasswordForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
-    reset({ token, ...values });
+    reset({ token: String(token), ...values });
   };
 
   const {

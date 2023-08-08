@@ -4,7 +4,7 @@ export { type TextAreaProps, TextArea } from "./components/TextArea";
 export { type CustomInputProps, CustomInput } from "./components/CustomInput";
 export { InputGroup } from "./components/InputGroup";
 export { InputGroupText } from "./components/InputGroupText";
-// export { Select } from "./components/Select";
+export { Select } from "./components/Select";
 export { InputGroupAddon } from "./components/InputGroupAddon";
 export { Label } from "./components/Label";
 export { InputPassword } from "./components/InputPassword";

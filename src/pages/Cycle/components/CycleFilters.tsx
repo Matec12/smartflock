@@ -89,7 +89,7 @@ const ActivityFilters = ({
           </FormGroup>
           <FormGroup>
             <Button className="w-full text-center" type="submit">
-              Filter
+              Login
             </Button>
           </FormGroup>
         </div>

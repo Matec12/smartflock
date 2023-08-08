@@ -1,3 +1,4 @@
+import { SidebarConfigProps } from "./SidebarConfig";
 import { NavListRoot } from "./SidebarNavList";
 import { ListSubheaderStyle } from "./style";
 import { clsxm } from "@/lib/utils";

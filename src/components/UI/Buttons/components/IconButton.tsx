@@ -1,11 +1,12 @@
+import React from "react";
 import { Icon, IconifyIcon } from "@iconify/react";
-import { Button, ButtonProps } from "..";
+import { Button } from "..";
 import { clsxm } from "@/lib/utils";
 
 type IconButtonProps = {
   icon?: string | IconifyIcon;
   iconClassName?: string;
-} & ButtonProps;
+} & React.ComponentPropsWithoutRef<"button">;
 
 const IconButton = ({
   icon = "",

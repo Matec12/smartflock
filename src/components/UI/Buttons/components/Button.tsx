@@ -1,21 +1,14 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { clsxm } from "@/lib/utils";
+import { ButtonVariant } from "@/types/types";
 
-export enum ButtonVariant {
-  Primary = "primary",
-  Secondary = "secondary",
-  Danger = "danger",
-  Success = "success",
-  Info = "info",
-  Warning = "warning"
-}
-
-export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   isLoading?: boolean;
   variant?: ButtonVariant;
   outlined?: boolean;
   flat?: boolean;
+  ghost?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -28,6 +21,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     onClick,
     outlined = false,
     flat = false,
+    ghost = false,
     ...rest
   }: ButtonProps) => {
     const [rippleStyle, setRippleStyle] = React.useState<{
@@ -88,6 +82,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 [`border-0 bg-transparent text-${variant} shadow-none hover:bg-${variant}-20 hover:text-${variant} hover:shadow-none`]:
                   true,
                 "disabled:border-opacity-60 disabled:bg-transparent disabled:text-opacity-50 disabled:hover:bg-transparent disabled:hover:bg-opacity-100":
+                  disabled
+              }
+            : ghost
+            ? {
+                [`hover:text-${variant}-darken-3 bg-${variant} bg-opacity-20 text-${variant} hover:bg-${variant}-10 hover:shadow-${variant}-darken-5/25 active:bg-${variant}-25`]:
+                  true,
+                "disabled:border-opacity-60 disabled:bg-transparent disabled:text-opacity-50 disabled:hover:bg-transparent disabled:hover:bg-opacity-0":
                   disabled
               }
             : {},

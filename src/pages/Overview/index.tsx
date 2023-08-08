@@ -1,5 +1,5 @@
 import { Page } from "@/components/Global/Page";
-import { BreadCrumbs, H1, H5 } from "@/components/UI";
+import { BreadCrumbs, H5 } from "@/components/UI";
 import { useAuth } from "@/hooks";
 import { isAdmin, isOrganizationAdmin } from "@/api/auth/types";
 import StatsHorizontal from "@/components/Widgets/StatsHorizontal";
@@ -13,9 +13,10 @@ import { useGetCyclesQuery } from "@/api/cycle";
 const Overview = () => {
   const { user } = useAuth();
   const { data: orgData, isLoading } = useGetOrganizationsQuery(user);
-  const { data: userData } = useGetUsersQuery(user);
-  const { data: cycleData } = useGetCyclesQuery();
-  const { data: staffData } = useGetOrganizationsStaffsQuery(user);
+  const { data: userData, isLoading: userLoader } = useGetUsersQuery(user);
+  const { data: cycleData, isLoading: cycleLoader } = useGetCyclesQuery();
+  const { data: staffData, isLoading: staffLoader } =
+    useGetOrganizationsStaffsQuery(user);
 
   const archivedCycles = cycleData?.payload?.cycles?.filter(
     (cycle) => new Date(cycle.endDate) < new Date()
@@ -37,6 +38,7 @@ const Overview = () => {
                 icon="ic:twotone-people-alt"
                 iconClassName="bg-primary text-primary"
                 stats={String(orgData?.payload?.organizations?.length)}
+                isLoading={isLoading}
                 statTitle="Organizations"
               />
             </div>
@@ -46,6 +48,7 @@ const Overview = () => {
                 iconClassName="bg-success text-success"
                 stats={String(userData?.payload?.users?.length)}
                 statTitle="Users"
+                isLoading={userLoader}
               />
             </div>
           </>
@@ -56,6 +59,7 @@ const Overview = () => {
             iconClassName="bg-info text-info"
             stats={String(cycleData?.payload?.cycles?.length)}
             statTitle="Cycles"
+            isLoading={cycleLoader}
           />
         </div>
         {isOrganizationAdmin(user!) && (
@@ -66,6 +70,7 @@ const Overview = () => {
                 iconClassName="bg-primary text-primary"
                 stats={String(staffData?.payload?.staffs?.length)}
                 statTitle="Staffs"
+                isLoading={staffLoader}
               />
             </div>
             <div>
@@ -74,6 +79,7 @@ const Overview = () => {
                 iconClassName="bg-success text-success"
                 stats={String(activeCycles?.length)}
                 statTitle="Active Cycles"
+                isLoading={cycleLoader}
               />
             </div>
             <div>
@@ -82,6 +88,7 @@ const Overview = () => {
                 iconClassName="bg-danger text-danger"
                 stats={String(archivedCycles?.length)}
                 statTitle="Archived Cycles"
+                isLoading={cycleLoader}
               />
             </div>
           </>

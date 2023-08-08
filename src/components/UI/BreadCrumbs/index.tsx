@@ -61,6 +61,7 @@ const BreadCrumbs = (props: BreadCrumbsProps) => {
                         {breadCrumbParent}
                       </PrimaryLink>
                     </BreadCrumbItem>
+                    <Icon icon="material-symbols:chevron-right-rounded" />
                   </>
                 ) : null}
                 {breadCrumbParent2 ? (

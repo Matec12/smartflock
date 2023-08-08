@@ -1,6 +1,6 @@
 import { clsxm } from "@/lib/utils";
 import { Icon } from "@iconify/react";
-import { Card, CardBody, H3, Paragraph } from "../UI";
+import { Card, CardBody, H3, Paragraph, Skeleton } from "../UI";
 
 interface IStatsHorizontalProps {
   icon: string;
@@ -8,6 +8,7 @@ interface IStatsHorizontalProps {
   stats: string;
   statTitle: string;
   className?: string;
+  isLoading?: boolean;
 }
 
 const StatsHorizontal = ({
@@ -15,8 +16,13 @@ const StatsHorizontal = ({
   iconClassName,
   stats,
   statTitle,
+  isLoading,
   className
 }: IStatsHorizontalProps) => {
+  if (isLoading) {
+    return <Skeleton className="h-28" />;
+  }
+
   return (
     <Card>
       <CardBody className={className}>

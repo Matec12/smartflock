@@ -34,9 +34,7 @@ const AccountPopover = () => {
             <MyAvatar />
             <div>
               <Paragraph className="text-sm">{user?.username}</Paragraph>
-              <Paragraph className="text-xs capitalize text-gray-500">
-                {user?.role}
-              </Paragraph>
+              <Paragraph className="text-xs capitalize">{user?.role}</Paragraph>
             </div>
           </div>
           <Menu.Item>

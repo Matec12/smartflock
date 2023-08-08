@@ -13,7 +13,7 @@ import { clsxm } from "@/lib/utils";
 import { User, UserRole } from "@/api/auth/types";
 import { GetActivityParams } from "@/api/activity/types";
 
-const Activity = () => {
+const ActivityModule = () => {
   const { user } = useAuth();
   const [userFilters, setUserFilters] = useState<GetActivityParams>({});
   const [allFilters, setAllFilters] = useState<GetActivityParams>({});
@@ -90,4 +90,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default ActivityModule;

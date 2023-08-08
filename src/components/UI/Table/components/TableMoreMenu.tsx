@@ -23,7 +23,7 @@ const TableMoreMenu = ({
   const [trigger, container] = usePopper({
     placement: "bottom-end",
     strategy: "fixed",
-    modifiers: [{ name: "offset", options: { offset: [30, 0] } }]
+    modifiers: [{ name: "offset", options: { offset: [60, -10] } }]
   });
 
   // const privilegedActions = actions.filter((action) =>

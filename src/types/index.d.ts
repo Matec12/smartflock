@@ -26,7 +26,7 @@ type ApiResponse<T extends ApiPayload = ApiPayload> = {
 type RequestError = { response: { data: ApiResponse<null> } };
 
 type SelectOptions = {
-  value: string | number;
+  value: string;
   label: string;
 };
 

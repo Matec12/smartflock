@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import { ButtonLink } from "@/components/UI";
 import { ListItemIconStyle, ListItemStyle, ListItemTextStyle } from "./style";
 import { isExternalLink } from "@/lib/layout";
+import { NavItemProps } from "./SidebarConfig";
 import { clsxm } from "@/lib/utils";
 
 interface INavItemRootProps {
@@ -23,7 +24,7 @@ const NavItemRoot = ({
 
   const renderContent = (
     <>
-      {icon && <Icon width={20} height={20} icon={icon} />}
+      {icon && <Icon width={24} height={24} icon={icon} />}
       <ListItemTextStyle isCollapse={isCollapse}>{title}</ListItemTextStyle>
       {!isCollapse && <>{children && <ArrowIcon open={open} />}</>}
     </>

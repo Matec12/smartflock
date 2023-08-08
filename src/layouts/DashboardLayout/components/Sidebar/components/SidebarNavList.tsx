@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { NavItemRoot, NavItemSub } from "./SidebarNavItem";
 import { Disclosure, Transition } from "@headlessui/react";
 import { getActive } from "@/lib/layout";
+import { NavItemProps } from "./SidebarConfig";
 
 interface INavListRootProps {
   isCollapse: boolean;

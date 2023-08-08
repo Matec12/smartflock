@@ -31,7 +31,7 @@ export const SidebarConfig: SidebarConfigProps[] = [
       {
         title: "Cycles",
         icon: "maki:doctor",
-        path: "/dashboard/system-data/speciality",
+        path: "/dashboard/system-data/cycles",
         role: [UserRole.OrgAdmin, UserRole.OrgStaff]
       }
     ]

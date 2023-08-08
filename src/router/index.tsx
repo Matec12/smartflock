@@ -39,11 +39,15 @@ const ResetPassword = Loadable(
 // DASHBOARD
 const Overview = Loadable(lazy(() => import("../pages/Overview")));
 const Activity = Loadable(lazy(() => import("../pages/Activity")));
+const Cycle = Loadable(lazy(() => import("../pages/Cycle")));
+const CycleDetails = Loadable(
+  lazy(() => import("../pages/Cycle/components/CycleDetails"))
+);
 
 /**
  * App Router
  */
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "auth",
     element: (
@@ -80,6 +84,9 @@ export const router = createBrowserRouter([
     children: [
       { path: "overview", element: <Overview /> },
       { path: "activity", element: <Activity /> },
+      { path: "system-data/cycles", element: <Cycle /> },
+      { path: "system-data/cycles/:id/:name", element: <CycleDetails /> },
+
       {
         path: "verify-email/:token",
         element: (
@@ -93,3 +100,5 @@ export const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/auth/login" replace /> },
   { path: "*", element: <Navigate to="/auth/login" replace /> }
 ]);
+
+export default router;

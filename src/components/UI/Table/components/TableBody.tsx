@@ -31,7 +31,7 @@ const TableBody = ({
 
               return (
                 <td
-                  className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-700 sm:pl-6"
+                  className="whitespace-nowrap py-4 pl-3 pr-3 text-sm font-medium text-gray-700 sm:pl-4"
                   key={i}
                   align={column.align}
                 >

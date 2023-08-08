@@ -6,7 +6,7 @@ export type SmallProps = {
 const Small: React.FC<SmallProps> = ({ children, className, ...rest }) => {
   return (
     <small
-      className={clsxm("font-base text-xs leading-none", className)}
+      className={clsxm("font-base text-xs leading-none text-body", className)}
       {...rest}
     >
       {children}
