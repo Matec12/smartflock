@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useAuth } from "@/hooks";
 import { Page } from "@/components/Global/Page";
 import { BreadCrumbs, Card } from "@/components/UI";
 import ActivityTable from "./components/ActivityTable";
@@ -6,11 +8,9 @@ import {
   useGetCurrentUserActivitiesQuery
 } from "@/api/activity";
 import { Tab } from "@headlessui/react";
-import { clsxm } from "@/lib/utils";
-import { useAuth } from "@/hooks";
-import { UserRole } from "@/api/auth/types";
 import { ActivityFilters } from "./components/ActivityFilters";
-import { useState } from "react";
+import { clsxm } from "@/lib/utils";
+import { User, UserRole } from "@/api/auth/types";
 import { GetActivityParams } from "@/api/activity/types";
 
 const Activity = () => {
@@ -20,7 +20,10 @@ const Activity = () => {
 
   const { data: mydata, isLoading: isFetching } =
     useGetCurrentUserActivitiesQuery(userFilters);
-  const { data, isLoading } = useGetAllActivitiesQuery(user, allFilters);
+  const { data, isLoading } = useGetAllActivitiesQuery(
+    user as User,
+    allFilters
+  );
 
   const activities = {
     User: (

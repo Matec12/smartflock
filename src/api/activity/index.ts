@@ -1,8 +1,8 @@
 import axios from "..";
 import { useQuery } from "@tanstack/react-query";
-import { Activity, GetActivityParams } from "./types";
 import { buildUrlWithParams } from "@/lib/utils";
 import { User, UserRole } from "../auth/types";
+import { Activity, GetActivityParams } from "./types";
 
 /**
  *

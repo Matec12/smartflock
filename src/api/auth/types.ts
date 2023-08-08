@@ -4,6 +4,9 @@ export enum UserRole {
   Admin = "admin"
 }
 
+export const isOrganization = (user: User) =>
+  user.role === UserRole.OrgAdmin || user.role === UserRole.OrgStaff;
+
 export interface User {
   id: string;
   email: string;
@@ -28,6 +31,11 @@ export type RegisterPayload = {
 export type ResetPasswordPayload = {
   token: string;
 } & Pick<RegisterPayload, "password" | "confirmPassword">;
+
+export type UpdatePasswordPayload = {
+  oldPassword: string;
+  newPassword: string;
+};
 
 export type LoginPayload = {
   email: string;

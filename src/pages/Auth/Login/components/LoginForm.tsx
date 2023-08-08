@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -34,13 +34,19 @@ const LoginSchema = z.object({
 });
 
 const LoginForm = () => {
+  const location = useLocation();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const queryParams = new URLSearchParams(location.search);
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     mode: "all",
-    resolver: zodResolver(LoginSchema)
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: queryParams ? (queryParams.get("email") as string) : "",
+      password: queryParams ? (queryParams.get("password") as string) : ""
+    }
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {

@@ -1,6 +1,12 @@
 import { ReactNode, createContext, useEffect, useReducer } from "react";
 import axios from "@/api";
 import { setSession } from "@/lib/jwt";
+import {
+  LoginPayload,
+  RegisterPayload,
+  User,
+  UpdatePasswordPayload
+} from "@/api/auth/types";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -29,6 +35,14 @@ type AuthAction =
   | {
       type: "REGISTER";
       payload: { isAuthenticated: boolean; isVerified: boolean; user: User };
+    }
+  | {
+      type: "UPDATE_USER";
+      payload: { isAuthenticated: boolean; isVerified: boolean; user: User };
+    }
+  | {
+      type: "UPDATE_PASSWORD";
+      payload: { isAuthenticated: boolean; isVerified: boolean; user: null };
     };
 
 const initialState: AuthState = {
@@ -76,6 +90,26 @@ const handlers: Record<
       isVerified,
       user
     };
+  },
+  UPDATE_USER: (state, action) => {
+    const { isAuthenticated, isVerified, user } = action.payload;
+
+    return {
+      ...state,
+      isAuthenticated,
+      isVerified,
+      user
+    };
+  },
+  UPDATE_PASSWORD: (state, action) => {
+    const { isAuthenticated, isVerified, user } = action.payload;
+
+    return {
+      ...state,
+      isAuthenticated,
+      isVerified,
+      user
+    };
   }
 };
 
@@ -86,13 +120,17 @@ interface AuthContextValue extends AuthState {
   login: (payload: LoginPayload) => Promise<void>;
   logout: () => Promise<void>;
   register: (payload: RegisterPayload) => Promise<void>;
+  updateUser: (payload: RegisterPayload) => Promise<void>;
+  updatePassword: (payload: UpdatePasswordPayload) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   ...initialState,
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
+  updateUser: () => Promise.resolve(),
+  updatePassword: () => Promise.resolve()
 });
 
 interface AuthProviderProps {
@@ -186,6 +224,47 @@ function AuthProvider({ children }: AuthProviderProps) {
     });
   };
 
+  const updateUser = async (
+    payload: Pick<RegisterPayload, "fullname" | "username">
+  ) => {
+    const { data } = await axios.put<
+      ApiResponse<{ message: string; user: User }>
+    >("users/me", payload);
+
+    const { user } = data.payload;
+
+    dispatch({
+      type: "UPDATE_USER",
+      payload: {
+        user,
+        isAuthenticated: true,
+        isVerified: user?.isVerified
+      }
+    });
+  };
+
+  const updatePassword = async (payload: {
+    oldPassword: string;
+    newPassword: string;
+  }) => {
+    const response = await axios.put<
+      ApiResponse<{ message: string; user: User }>
+    >("password/update", payload);
+
+    if (response.data.success === true) {
+      setSession(null);
+    }
+
+    dispatch({
+      type: "UPDATE_PASSWORD",
+      payload: {
+        user: null,
+        isAuthenticated: false,
+        isVerified: false
+      }
+    });
+  };
+
   const logout = async () => {
     setSession(null);
     dispatch({
@@ -204,7 +283,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         ...state,
         login,
         logout,
-        register
+        register,
+        updateUser,
+        updatePassword
       }}
     >
       {children}

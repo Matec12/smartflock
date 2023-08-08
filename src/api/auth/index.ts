@@ -85,7 +85,7 @@ const _forgotPasswordRequest = async (
  */
 
 export const useForgotPasswordMutation = () => {
-  const forgotPasswordlMutation = useMutation(_forgotPasswordRequest, {
+  const forgotPasswordMutation = useMutation(_forgotPasswordRequest, {
     onSuccess: (data) => {
       toast.success(data.payload.message);
     },
@@ -94,7 +94,7 @@ export const useForgotPasswordMutation = () => {
     }
   });
 
-  return forgotPasswordlMutation;
+  return forgotPasswordMutation;
 };
 
 /**
