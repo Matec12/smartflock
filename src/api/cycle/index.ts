@@ -288,7 +288,7 @@ export const useUpdateDailyAccountLogMutation = () => {
 const _getHouseRecordLogsRequest = async (
   cycle: string
 ): Promise<
-  ApiResponse<{ message: string; house_record_logs: DailyAccountLog[] }>
+  ApiResponse<{ message: string; house_record_logs: HouseRecordLog[] }>
 > => {
   const { data } = await axios.get(`house_record_logs/${cycle}`);
   return data;
@@ -398,9 +398,7 @@ export const useUpdateHouseRecordLogMutation = () => {
  */
 const _getBroilerLogsRequest = async (
   cycle: string
-): Promise<
-  ApiResponse<{ message: string; broiler_logs: DailyAccountLog[] }>
-> => {
+): Promise<ApiResponse<{ message: string; broiler_logs: BroilerLog[] }>> => {
   const { data } = await axios.get(`broiler_logs/${cycle}`);
   return data;
 };

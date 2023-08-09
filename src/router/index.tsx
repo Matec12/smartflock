@@ -85,7 +85,7 @@ const router = createBrowserRouter([
       { path: "overview", element: <Overview /> },
       { path: "activity", element: <Activity /> },
       { path: "system-data/cycles", element: <Cycle /> },
-      { path: "system-data/cycles/:id/:name", element: <CycleDetails /> },
+      { path: "system-data/cycles/:id/:name/:tab", element: <CycleDetails /> },
 
       {
         path: "verify-email/:token",

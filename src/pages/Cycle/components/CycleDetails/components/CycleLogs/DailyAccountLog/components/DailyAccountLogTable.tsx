@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   TableToolbar,
   CardBody,
@@ -8,26 +7,30 @@ import {
   Card,
   TableMoreMenu
 } from "@/components/UI";
-import { Cycle } from "@/api/cycle/types";
-import { CreateUpdateCycle } from "./CreateUpdateCycle";
 import { fDateTime } from "@/lib/formatTime";
-import { applySortFilter, getComparator, slugify } from "@/lib/utils";
-interface CycleTableProps {
+import { applySortFilter, getComparator } from "@/lib/utils";
+import { DailyAccountLog } from "@/api/cycle/types";
+// import { CreateUpdateDailyAccountLog } from "./CreateUpdateDailyAccountLog";
+
+interface DailyAccountLogTableProps {
   isLoading: boolean;
-  cycles: Cycle[];
+  dailyAccountLogs: DailyAccountLog[];
 }
 
-const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
-  const navigate = useNavigate();
+const DailyAccountLogTable = ({
+  isLoading,
+  dailyAccountLogs
+}: DailyAccountLogTableProps) => {
   const [filterTerm, setFilterTerm] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [orderBy, setOrderBy] = useState<string>("action");
   const [order, setOrder] = useState<"ascending" | "descending">("ascending");
-  const [currentRow, setCurrentRow] = useState<Cycle | null>(null);
-  const [openAddCycleModal, setOpenAddCycleModal] = useState<boolean>(false);
-  const [openUpdateCycleModal, setOpenUpdateCycleModal] =
-    useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<DailyAccountLog | null>(null);
+  // const [openAddDailyAccountLogModal, setOpenAddDailyAccountLogModal] =
+  //   useState<boolean>(false);
+  // const [openUpdateDailyAccountLogModal, setOpenUpdateDailyAccountLogModal] =
+  //   useState<boolean>(false);
 
   const handleRequestSort = (_: any, property: string) => {
     const isAsc = orderBy === property && order === "ascending";
@@ -36,7 +39,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
   };
 
   const filteredData = applySortFilter(
-    cycles,
+    dailyAccountLogs,
     getComparator(order, orderBy),
     filterTerm
   );
@@ -59,38 +62,27 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
 
   const isDataFound = filteredData?.length === 0;
 
-  const handleAddCycleModal = () => {
-    setOpenAddCycleModal(true);
+  const handleAddDailyAccountLogModal = () => {
+    // setOpenAddDailyAccountLogModal(true);
   };
 
-  const handleUpdateCycleModal = (row: Cycle) => {
+  const handleUpdateDailyAccountLogModal = (row: DailyAccountLog) => {
     setCurrentRow(row);
-    setOpenUpdateCycleModal(true);
+    // setOpenUpdateDailyAccountLogModal(true);
   };
 
-  const handleClose = () => {
-    setOpenAddCycleModal(false);
-    setOpenUpdateCycleModal(false);
+  const handleViewDetails = (row: DailyAccountLog) => {
+    setCurrentRow(row);
   };
 
-  const handleViewDetails = (row: Cycle) => {
-    let defaultTab;
-    if (row.birdType.birdId === 1) {
-      defaultTab = 0;
-    } else if (row.birdType.birdId === 2 || row.birdType.birdId === 5) {
-      defaultTab = 1;
-    } else {
-      defaultTab = 2;
-    }
+  // const handleClose = () => {
+  //   setOpenAddDailyAccountLogModal(false);
+  //   setOpenUpdateDailyAccountLogModal(false);
+  // };
 
-    navigate(
-      `/dashboard/system-data/cycles/${row._id}/${slugify(
-        row.name
-      )}/${defaultTab}`
-    );
-  };
+  console.log(currentRow);
 
-  const tableActions = (row?: Cycle): TableActions[] => [
+  const tableActions = (row?: DailyAccountLog): TableActions[] => [
     {
       title: "View",
       icon: "eva:eye-fill",
@@ -100,7 +92,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
     {
       title: "Update",
       icon: "eva:edit-fill",
-      action: () => handleUpdateCycleModal(row!),
+      action: () => handleUpdateDailyAccountLogModal(row!),
       privilege: [2]
     }
   ];
@@ -111,30 +103,51 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       label: "S/N",
       render: (row) => filteredData?.indexOf(row) + 1
     },
-    { id: "name", label: "Name" },
     {
-      id: "description",
-      label: "Description"
+      id: "date",
+      label: "Log Date",
+      render: (row: DailyAccountLog) => fDateTime(row?.date)
     },
     {
-      id: "birdType",
-      label: "Bird Type",
-      render: (row: Cycle) => row?.birdType?.name
+      id: "eggsProduction",
+      label: "Eggs Produced",
+      render: (row: DailyAccountLog) => row.eggsProduction.produced
     },
     {
-      id: "startDate",
-      label: "Start Date",
-      render: (row: Cycle) => fDateTime(row?.startDate)
+      id: "eggsProductionSold",
+      label: "Eggs Sold",
+      render: (row: DailyAccountLog) => row.eggsProduction.sold
     },
     {
-      id: "endDate",
-      label: "End Date",
-      render: (row: Cycle) => fDateTime(row?.endDate)
+      id: "eggsProductionBalance",
+      label: "Balance C/F",
+      render: (row: DailyAccountLog) => row.eggsProduction.balanceCarriedForward
+    },
+    {
+      id: "cashBalance",
+      label: "Cash In Hand",
+      render: (row: DailyAccountLog) => row.cashBalance.cashInHand
+    },
+    {
+      id: "sales",
+      label: "Sales",
+      render: (row: DailyAccountLog) => row.cashBalance.sales
+    },
+    {
+      id: "Expenses",
+      label: "Expenses",
+      render: (row: DailyAccountLog) => row.cashBalance.cashInHand
+    },
+    {
+      id: "remarks",
+      label: "Remarks"
     },
     {
       id: "actions",
       label: "Actions",
-      render: (row: Cycle) => <TableMoreMenu actions={tableActions(row)} />
+      render: (row: DailyAccountLog) => (
+        <TableMoreMenu actions={tableActions(row)} />
+      )
     }
   ];
 
@@ -143,13 +156,13 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       <Card className="z-10">
         <TableToolbar
           filteredData={filteredData!}
-          title="Cycle"
+          title="Daily Account Log"
           rowsPerPage={rowsPerPage}
           handlePerPage={handleChangeRowsPerPage}
           filterTerm={filterTerm}
           handleFilter={handleFilter}
-          buttonName="Create Cycle"
-          handleAddModal={handleAddCycleModal}
+          buttonName="Log"
+          handleAddModal={handleAddDailyAccountLogModal}
         />
         <CardBody className="overflow-x-auto overflow-y-hidden p-0">
           <Table
@@ -173,22 +186,22 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
           onPageChange={handleChangePage}
         />
       </Card>
-      {openAddCycleModal && (
-        <CreateUpdateCycle
-          isOpen={openAddCycleModal}
+      {/* {openAddDailyAccountLogModal && (
+        <CreateUpdateDailyAccountLog
+          isOpen={openAddDailyAccountLogModal}
           handleClose={handleClose}
         />
       )}
 
-      {openUpdateCycleModal && (
-        <CreateUpdateCycle
+      {openUpdateDailyAccountLogModal && (
+        <CreateUpdateDailyAccountLog
           currentRow={currentRow!}
-          isOpen={openUpdateCycleModal}
+          isOpen={openUpdateDailyAccountLogModal}
           handleClose={handleClose}
         />
-      )}
+      )} */}
     </>
   );
 };
 
-export { CycleTable };
+export { DailyAccountLogTable };

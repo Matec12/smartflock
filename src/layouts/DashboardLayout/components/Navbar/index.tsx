@@ -27,7 +27,7 @@ const DashboardNavbar = ({ onOpenSidebar }: IDashboardNavbarProps) => {
     >
       <div className="relative flex min-h-full items-center px-6 lg:px-10">
         {!isDesktop && (
-          <div>
+          <div className="flex items-center">
             <IconButton
               onClick={onOpenSidebar}
               className="mr-2 text-primary"

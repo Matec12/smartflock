@@ -35,11 +35,11 @@ export type CreateCyclePayload = Omit<
 export interface EggsProduction {
   produced: number;
   sold: number;
-  balance: number;
+  balanceCarriedForward: number;
 }
 
 export interface CashBalance {
-  inHand: number;
+  cashInHand: number;
   sales: number;
   expenses: number;
   balance: number;

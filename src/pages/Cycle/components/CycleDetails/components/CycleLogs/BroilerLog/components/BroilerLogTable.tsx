@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   TableToolbar,
   CardBody,
@@ -8,26 +7,27 @@ import {
   Card,
   TableMoreMenu
 } from "@/components/UI";
-import { Cycle } from "@/api/cycle/types";
-import { CreateUpdateCycle } from "./CreateUpdateCycle";
 import { fDateTime } from "@/lib/formatTime";
-import { applySortFilter, getComparator, slugify } from "@/lib/utils";
-interface CycleTableProps {
+import { applySortFilter, getComparator } from "@/lib/utils";
+import { BroilerLog } from "@/api/cycle/types";
+// import { CreateUpdateBroilerLog } from "./CreateUpdateBroilerLog";
+
+interface BroilerLogTableProps {
   isLoading: boolean;
-  cycles: Cycle[];
+  broilerLogs: BroilerLog[];
 }
 
-const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
-  const navigate = useNavigate();
+const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
   const [filterTerm, setFilterTerm] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [orderBy, setOrderBy] = useState<string>("action");
   const [order, setOrder] = useState<"ascending" | "descending">("ascending");
-  const [currentRow, setCurrentRow] = useState<Cycle | null>(null);
-  const [openAddCycleModal, setOpenAddCycleModal] = useState<boolean>(false);
-  const [openUpdateCycleModal, setOpenUpdateCycleModal] =
-    useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<BroilerLog | null>(null);
+  // const [openAddBroilerLogModal, setOpenAddBroilerLogModal] =
+  //   useState<boolean>(false);
+  // const [openUpdateBroilerLogModal, setOpenUpdateBroilerLogModal] =
+  //   useState<boolean>(false);
 
   const handleRequestSort = (_: any, property: string) => {
     const isAsc = orderBy === property && order === "ascending";
@@ -36,7 +36,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
   };
 
   const filteredData = applySortFilter(
-    cycles,
+    broilerLogs,
     getComparator(order, orderBy),
     filterTerm
   );
@@ -59,38 +59,27 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
 
   const isDataFound = filteredData?.length === 0;
 
-  const handleAddCycleModal = () => {
-    setOpenAddCycleModal(true);
+  const handleAddBroilerLogModal = () => {
+    // setOpenAddBroilerLogModal(true);
   };
 
-  const handleUpdateCycleModal = (row: Cycle) => {
+  const handleUpdateBroilerLogModal = (row: BroilerLog) => {
     setCurrentRow(row);
-    setOpenUpdateCycleModal(true);
+    // setOpenUpdateBroilerLogModal(true);
   };
 
-  const handleClose = () => {
-    setOpenAddCycleModal(false);
-    setOpenUpdateCycleModal(false);
+  const handleViewDetails = (row: BroilerLog) => {
+    setCurrentRow(row);
   };
 
-  const handleViewDetails = (row: Cycle) => {
-    let defaultTab;
-    if (row.birdType.birdId === 1) {
-      defaultTab = 0;
-    } else if (row.birdType.birdId === 2 || row.birdType.birdId === 5) {
-      defaultTab = 1;
-    } else {
-      defaultTab = 2;
-    }
+  // const handleClose = () => {
+  //   setOpenAddBroilerLogModal(false);
+  //   setOpenUpdateBroilerLogModal(false);
+  // };
 
-    navigate(
-      `/dashboard/system-data/cycles/${row._id}/${slugify(
-        row.name
-      )}/${defaultTab}`
-    );
-  };
+  console.log(currentRow);
 
-  const tableActions = (row?: Cycle): TableActions[] => [
+  const tableActions = (row?: BroilerLog): TableActions[] => [
     {
       title: "View",
       icon: "eva:eye-fill",
@@ -100,7 +89,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
     {
       title: "Update",
       icon: "eva:edit-fill",
-      action: () => handleUpdateCycleModal(row!),
+      action: () => handleUpdateBroilerLogModal(row!),
       privilege: [2]
     }
   ];
@@ -111,30 +100,55 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       label: "S/N",
       render: (row) => filteredData?.indexOf(row) + 1
     },
-    { id: "name", label: "Name" },
     {
-      id: "description",
-      label: "Description"
+      id: "date",
+      label: "Log Date",
+      render: (row: BroilerLog) => fDateTime(row?.date)
     },
     {
-      id: "birdType",
-      label: "Bird Type",
-      render: (row: Cycle) => row?.birdType?.name
+      id: "numberOfBirds",
+      label: "No of Birds"
     },
     {
-      id: "startDate",
-      label: "Start Date",
-      render: (row: Cycle) => fDateTime(row?.startDate)
+      id: "mortality",
+      label: "Mortality"
     },
     {
-      id: "endDate",
-      label: "End Date",
-      render: (row: Cycle) => fDateTime(row?.endDate)
+      id: "culls",
+      label: "Culls"
+    },
+    {
+      id: "feed",
+      label: "Feed(KG)"
+    },
+    {
+      id: "cumulativeFeed",
+      label: "Cumulative Feed"
+    },
+    {
+      id: "weeklyWeightGain",
+      label: "Weekly Weight Gain"
+    },
+    {
+      id: "drugsVaccinationCost",
+      label: "Vaccination Cost"
+    },
+    {
+      id: "costOfFeeding",
+      label: "Cost of Feeding"
+    },
+    {
+      id: "costOfLabour",
+      label: "Cost of Labour"
+    },
+    {
+      id: "remarks",
+      label: "Remarks"
     },
     {
       id: "actions",
       label: "Actions",
-      render: (row: Cycle) => <TableMoreMenu actions={tableActions(row)} />
+      render: (row: BroilerLog) => <TableMoreMenu actions={tableActions(row)} />
     }
   ];
 
@@ -143,13 +157,13 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       <Card className="z-10">
         <TableToolbar
           filteredData={filteredData!}
-          title="Cycle"
+          title="Non Layer Log"
           rowsPerPage={rowsPerPage}
           handlePerPage={handleChangeRowsPerPage}
           filterTerm={filterTerm}
           handleFilter={handleFilter}
-          buttonName="Create Cycle"
-          handleAddModal={handleAddCycleModal}
+          buttonName="Log"
+          handleAddModal={handleAddBroilerLogModal}
         />
         <CardBody className="overflow-x-auto overflow-y-hidden p-0">
           <Table
@@ -173,22 +187,22 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
           onPageChange={handleChangePage}
         />
       </Card>
-      {openAddCycleModal && (
-        <CreateUpdateCycle
-          isOpen={openAddCycleModal}
+      {/* {openAddBroilerLogModal && (
+        <CreateUpdateBroilerLog
+          isOpen={openAddBroilerLogModal}
           handleClose={handleClose}
         />
       )}
 
-      {openUpdateCycleModal && (
-        <CreateUpdateCycle
+      {openUpdateBroilerLogModal && (
+        <CreateUpdateBroilerLog
           currentRow={currentRow!}
-          isOpen={openUpdateCycleModal}
+          isOpen={openUpdateBroilerLogModal}
           handleClose={handleClose}
         />
-      )}
+      )} */}
     </>
   );
 };
 
-export { CycleTable };
+export { BroilerLogTable };

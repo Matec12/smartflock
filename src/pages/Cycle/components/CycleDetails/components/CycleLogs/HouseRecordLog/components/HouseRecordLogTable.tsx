@@ -1,5 +1,4 @@
 import { SetStateAction, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   TableToolbar,
   CardBody,
@@ -8,26 +7,30 @@ import {
   Card,
   TableMoreMenu
 } from "@/components/UI";
-import { Cycle } from "@/api/cycle/types";
-import { CreateUpdateCycle } from "./CreateUpdateCycle";
 import { fDateTime } from "@/lib/formatTime";
-import { applySortFilter, getComparator, slugify } from "@/lib/utils";
-interface CycleTableProps {
+import { applySortFilter, getComparator } from "@/lib/utils";
+import { HouseRecordLog } from "@/api/cycle/types";
+// import { CreateUpdateHouseRecordLog } from "./CreateUpdateHouseRecordLog";
+
+interface HouseRecordLogTableProps {
   isLoading: boolean;
-  cycles: Cycle[];
+  houseRecordLogs: HouseRecordLog[];
 }
 
-const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
-  const navigate = useNavigate();
+const HouseRecordLogTable = ({
+  isLoading,
+  houseRecordLogs
+}: HouseRecordLogTableProps) => {
   const [filterTerm, setFilterTerm] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [orderBy, setOrderBy] = useState<string>("action");
   const [order, setOrder] = useState<"ascending" | "descending">("ascending");
-  const [currentRow, setCurrentRow] = useState<Cycle | null>(null);
-  const [openAddCycleModal, setOpenAddCycleModal] = useState<boolean>(false);
-  const [openUpdateCycleModal, setOpenUpdateCycleModal] =
-    useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<HouseRecordLog | null>(null);
+  // const [openAddHouseRecordLogModal, setOpenAddHouseRecordLogModal] =
+  //   useState<boolean>(false);
+  // const [openUpdateHouseRecordLogModal, setOpenUpdateHouseRecordLogModal] =
+  //   useState<boolean>(false);
 
   const handleRequestSort = (_: any, property: string) => {
     const isAsc = orderBy === property && order === "ascending";
@@ -36,7 +39,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
   };
 
   const filteredData = applySortFilter(
-    cycles,
+    houseRecordLogs,
     getComparator(order, orderBy),
     filterTerm
   );
@@ -59,38 +62,27 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
 
   const isDataFound = filteredData?.length === 0;
 
-  const handleAddCycleModal = () => {
-    setOpenAddCycleModal(true);
+  const handleAddHouseRecordLogModal = () => {
+    // setOpenAddHouseRecordLogModal(true);
   };
 
-  const handleUpdateCycleModal = (row: Cycle) => {
+  const handleUpdateHouseRecordLogModal = (row: HouseRecordLog) => {
     setCurrentRow(row);
-    setOpenUpdateCycleModal(true);
+    // setOpenUpdateHouseRecordLogModal(true);
   };
 
-  const handleClose = () => {
-    setOpenAddCycleModal(false);
-    setOpenUpdateCycleModal(false);
+  const handleViewDetails = (row: HouseRecordLog) => {
+    setCurrentRow(row);
   };
 
-  const handleViewDetails = (row: Cycle) => {
-    let defaultTab;
-    if (row.birdType.birdId === 1) {
-      defaultTab = 0;
-    } else if (row.birdType.birdId === 2 || row.birdType.birdId === 5) {
-      defaultTab = 1;
-    } else {
-      defaultTab = 2;
-    }
+  // const handleClose = () => {
+  //   setOpenAddHouseRecordLogModal(false);
+  //   setOpenUpdateHouseRecordLogModal(false);
+  // };
 
-    navigate(
-      `/dashboard/system-data/cycles/${row._id}/${slugify(
-        row.name
-      )}/${defaultTab}`
-    );
-  };
+  console.log(currentRow);
 
-  const tableActions = (row?: Cycle): TableActions[] => [
+  const tableActions = (row?: HouseRecordLog): TableActions[] => [
     {
       title: "View",
       icon: "eva:eye-fill",
@@ -100,7 +92,7 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
     {
       title: "Update",
       icon: "eva:edit-fill",
-      action: () => handleUpdateCycleModal(row!),
+      action: () => handleUpdateHouseRecordLogModal(row!),
       privilege: [2]
     }
   ];
@@ -111,30 +103,46 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       label: "S/N",
       render: (row) => filteredData?.indexOf(row) + 1
     },
-    { id: "name", label: "Name" },
     {
-      id: "description",
-      label: "Description"
+      id: "date",
+      label: "Log Date",
+      render: (row: HouseRecordLog) => fDateTime(row?.date)
     },
     {
-      id: "birdType",
-      label: "Bird Type",
-      render: (row: Cycle) => row?.birdType?.name
+      id: "ageOfBirds",
+      label: "Age"
     },
     {
-      id: "startDate",
-      label: "Start Date",
-      render: (row: Cycle) => fDateTime(row?.startDate)
+      id: "eggsProductionNumber",
+      label: "Eggs Produced",
+      render: (row: HouseRecordLog) => row.eggsProduction?.number
     },
     {
-      id: "endDate",
-      label: "End Date",
-      render: (row: Cycle) => fDateTime(row?.endDate)
+      id: "stockOfBirdsMortality",
+      label: "Stock Mortality",
+      render: (row: HouseRecordLog) => row.stockOfBirds?.mortality
+    },
+    {
+      id: "stockOfBirdsMortality",
+      label: "Stock Balance",
+      render: (row: HouseRecordLog) => row.stockOfBirds?.balance
+    },
+    {
+      id: "drugVaccineUsed",
+      label: "Vaccine Used",
+      render: (row: HouseRecordLog) => row.stockOfBirds?.balance
+    },
+    {
+      id: "managementRemarks",
+      label: "Remarks",
+      render: (row: HouseRecordLog) => row.stockOfBirds?.balance
     },
     {
       id: "actions",
       label: "Actions",
-      render: (row: Cycle) => <TableMoreMenu actions={tableActions(row)} />
+      render: (row: HouseRecordLog) => (
+        <TableMoreMenu actions={tableActions(row)} />
+      )
     }
   ];
 
@@ -143,13 +151,13 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       <Card className="z-10">
         <TableToolbar
           filteredData={filteredData!}
-          title="Cycle"
+          title="House Record Log"
           rowsPerPage={rowsPerPage}
           handlePerPage={handleChangeRowsPerPage}
           filterTerm={filterTerm}
           handleFilter={handleFilter}
-          buttonName="Create Cycle"
-          handleAddModal={handleAddCycleModal}
+          buttonName="Log"
+          handleAddModal={handleAddHouseRecordLogModal}
         />
         <CardBody className="overflow-x-auto overflow-y-hidden p-0">
           <Table
@@ -173,22 +181,22 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
           onPageChange={handleChangePage}
         />
       </Card>
-      {openAddCycleModal && (
-        <CreateUpdateCycle
-          isOpen={openAddCycleModal}
+      {/* {openAddHouseRecordLogModal && (
+        <CreateUpdateHouseRecordLog
+          isOpen={openAddHouseRecordLogModal}
           handleClose={handleClose}
         />
       )}
 
-      {openUpdateCycleModal && (
-        <CreateUpdateCycle
+      {openUpdateHouseRecordLogModal && (
+        <CreateUpdateHouseRecordLog
           currentRow={currentRow!}
-          isOpen={openUpdateCycleModal}
+          isOpen={openUpdateHouseRecordLogModal}
           handleClose={handleClose}
         />
-      )}
+      )} */}
     </>
   );
 };
 
-export { CycleTable };
+export { HouseRecordLogTable };
