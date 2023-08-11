@@ -22,6 +22,9 @@ export const fToNow = (date: string | number | Date) => {
   });
 };
 
+export const formatLocaleDate = (date: string) =>
+  format(new Date(date), "yyyy-MM-dd");
+
 export const formatDate = (date: string | number | Date): Date =>
   typeof date === "number" && String(date).length <= 10
     ? new Date(date * 1000)

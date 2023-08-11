@@ -16,7 +16,7 @@ const CycleDetailsCard = ({
     <Card className="z-30 my-5 overflow-visible">
       <CardBody>
         <Paragraph className="text-slate-600">Details</Paragraph>
-        <div className="mt-5 grid grid-cols-2 gap-3">
+        <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex gap-2">
             <Paragraph>Name: </Paragraph>
             <Paragraph>{cycle?.name}</Paragraph>
@@ -40,11 +40,11 @@ const CycleDetailsCard = ({
           </div>
           <div className="flex gap-2">
             <Paragraph>Start Date: </Paragraph>
-            <Paragraph>{fDate(cycle?.startDate!)}</Paragraph>
+            <Paragraph>{fDate(cycle?.startDate! || new Date())}</Paragraph>
           </div>
           <div className="flex gap-2">
             <Paragraph>End Date: </Paragraph>
-            <Paragraph>{fDate(cycle?.endDate!)}</Paragraph>
+            <Paragraph>{fDate(cycle?.endDate! || new Date())}</Paragraph>
           </div>
         </div>
         <div className="flex gap-5 justify-center w-full items-center mt-6">

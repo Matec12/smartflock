@@ -45,4 +45,4 @@ const StatsHorizontal = ({
   );
 };
 
-export default StatsHorizontal;
+export { StatsHorizontal };

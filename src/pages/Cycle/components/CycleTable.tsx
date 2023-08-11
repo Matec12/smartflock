@@ -122,6 +122,16 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       render: (row: Cycle) => row?.birdType?.name
     },
     {
+      id: "numberOfBirds",
+      label: "Total Birds",
+      render: (row: Cycle) => row?.numberOfBirds
+    },
+    {
+      id: "costOfFeedPerKg",
+      label: "Cost of Feed Per Kg",
+      render: (row: Cycle) => row?.costOfFeedPerKg
+    },
+    {
       id: "startDate",
       label: "Start Date",
       render: (row: Cycle) => fDateTime(row?.startDate)

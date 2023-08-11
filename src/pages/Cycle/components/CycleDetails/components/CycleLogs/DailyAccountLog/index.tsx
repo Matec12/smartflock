@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetDailyAccountLogsQuery } from "@/api/cycle";
 import { DailyAccountLogTable } from "./components/DailyAccountLogTable";
+import { Skeleton } from "@/components/UI";
 
 const DailyAccountLog = () => {
   const params = useParams();
@@ -14,7 +15,7 @@ const DailyAccountLog = () => {
   console.log({ dailyAccountLogs });
 
   if (isLoading) {
-    return "Loading";
+    return <Skeleton className="w-full h-96" />;
   }
 
   return (

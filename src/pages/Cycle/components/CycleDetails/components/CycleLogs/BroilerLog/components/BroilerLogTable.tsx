@@ -10,7 +10,7 @@ import {
 import { fDateTime } from "@/lib/formatTime";
 import { applySortFilter, getComparator } from "@/lib/utils";
 import { BroilerLog } from "@/api/cycle/types";
-// import { CreateUpdateBroilerLog } from "./CreateUpdateBroilerLog";
+import { CreateUpdateBroilerLog } from "./CreateUpdateBroilerLog";
 
 interface BroilerLogTableProps {
   isLoading: boolean;
@@ -24,10 +24,10 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
   const [orderBy, setOrderBy] = useState<string>("action");
   const [order, setOrder] = useState<"ascending" | "descending">("ascending");
   const [currentRow, setCurrentRow] = useState<BroilerLog | null>(null);
-  // const [openAddBroilerLogModal, setOpenAddBroilerLogModal] =
-  //   useState<boolean>(false);
-  // const [openUpdateBroilerLogModal, setOpenUpdateBroilerLogModal] =
-  //   useState<boolean>(false);
+  const [openAddBroilerLogModal, setOpenAddBroilerLogModal] =
+    useState<boolean>(false);
+  const [openUpdateBroilerLogModal, setOpenUpdateBroilerLogModal] =
+    useState<boolean>(false);
 
   const handleRequestSort = (_: any, property: string) => {
     const isAsc = orderBy === property && order === "ascending";
@@ -60,22 +60,22 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
   const isDataFound = filteredData?.length === 0;
 
   const handleAddBroilerLogModal = () => {
-    // setOpenAddBroilerLogModal(true);
+    setOpenAddBroilerLogModal(true);
   };
 
   const handleUpdateBroilerLogModal = (row: BroilerLog) => {
     setCurrentRow(row);
-    // setOpenUpdateBroilerLogModal(true);
+    setOpenUpdateBroilerLogModal(true);
   };
 
   const handleViewDetails = (row: BroilerLog) => {
     setCurrentRow(row);
   };
 
-  // const handleClose = () => {
-  //   setOpenAddBroilerLogModal(false);
-  //   setOpenUpdateBroilerLogModal(false);
-  // };
+  const handleClose = () => {
+    setOpenAddBroilerLogModal(false);
+    setOpenUpdateBroilerLogModal(false);
+  };
 
   console.log(currentRow);
 
@@ -111,23 +111,34 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
     },
     {
       id: "mortality",
-      label: "Mortality"
+      label: "Mortality",
+      render: (row: BroilerLog) => String(row.mortality)
     },
     {
       id: "culls",
-      label: "Culls"
+      label: "Culls",
+      render: (row: BroilerLog) => String(row.mortality)
     },
     {
-      id: "feed",
-      label: "Feed(KG)"
+      id: "feedType",
+      label: "Feed Type",
+      render: (row: BroilerLog) => row.feedType.name
     },
     {
-      id: "cumulativeFeed",
-      label: "Cumulative Feed"
+      id: "feedConsumed",
+      label: "Feed Consumed(kg)"
+    },
+    {
+      id: "feedConsumedPerBird",
+      label: "Feed Consumed Per Bird(kg)"
     },
     {
       id: "weeklyWeightGain",
       label: "Weekly Weight Gain"
+    },
+    {
+      id: "averageWeeklyWeightGainPerBird",
+      label: "Average Weekly Weight Gain"
     },
     {
       id: "drugsVaccinationCost",
@@ -162,7 +173,7 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
           handlePerPage={handleChangeRowsPerPage}
           filterTerm={filterTerm}
           handleFilter={handleFilter}
-          buttonName="Log"
+          buttonName="Create Log"
           handleAddModal={handleAddBroilerLogModal}
         />
         <CardBody className="overflow-x-auto overflow-y-hidden p-0">
@@ -187,7 +198,7 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
           onPageChange={handleChangePage}
         />
       </Card>
-      {/* {openAddBroilerLogModal && (
+      {openAddBroilerLogModal && (
         <CreateUpdateBroilerLog
           isOpen={openAddBroilerLogModal}
           handleClose={handleClose}
@@ -200,7 +211,7 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
           isOpen={openUpdateBroilerLogModal}
           handleClose={handleClose}
         />
-      )} */}
+      )}
     </>
   );
 };

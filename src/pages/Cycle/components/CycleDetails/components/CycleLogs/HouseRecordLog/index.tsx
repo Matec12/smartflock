@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetHouseRecordLogsQuery } from "@/api/cycle";
 import { HouseRecordLogTable } from "./components/HouseRecordLogTable";
+import { Skeleton } from "@/components/UI";
 
 const HouseRecordLog = () => {
   const params = useParams();
@@ -11,7 +12,7 @@ const HouseRecordLog = () => {
   const houseRecordLogs = houseRecordData?.payload?.house_record_logs;
 
   if (isLoading) {
-    return "Loading";
+    return <Skeleton className="w-full h-96" />;
   }
 
   return (

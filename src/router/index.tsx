@@ -13,7 +13,7 @@ function Loadable<T extends JSX.IntrinsicAttributes>(Component: React.FC<T>) {
       <Suspense
         fallback={
           !pathname.includes("/dashboard") ? (
-            <div className="w-full h-[calc(100vh-var(--header-height))] flex items-center justify-center">
+            <div className="w-full h-screen flex items-center justify-center">
               <Loader />
             </div>
           ) : null

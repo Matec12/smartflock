@@ -34,16 +34,16 @@ const CycleLogs = ({ tab, cycle }: CycleLogsProps) => {
 
   const isTabDisabled = (logType: any): boolean => {
     return (
-      (logType[0] === "Daily Account" && cycle.birdType.birdId !== 1) ||
+      (logType[0] === "Daily Account" && cycle?.birdType?.birdId !== 1) ||
       (logType[0] === "House Record" &&
-        cycle.birdType.birdId !== 1 &&
-        cycle.birdType.birdId !== 2 &&
-        cycle.birdType.birdId !== 5) ||
+        cycle?.birdType?.birdId !== 1 &&
+        cycle?.birdType?.birdId !== 2 &&
+        cycle?.birdType?.birdId !== 5) ||
       (logType[0] === "Non Layer" &&
-        cycle.birdType.birdId !== 3 &&
-        cycle.birdType.birdId !== 4 &&
-        cycle.birdType.birdId !== 6 &&
-        cycle.birdType.birdId !== 7)
+        cycle?.birdType?.birdId !== 3 &&
+        cycle?.birdType?.birdId !== 4 &&
+        cycle?.birdType?.birdId !== 6 &&
+        cycle?.birdType?.birdId !== 7)
     );
   };
 
@@ -56,14 +56,6 @@ const CycleLogs = ({ tab, cycle }: CycleLogsProps) => {
     );
   };
 
-  // useEffect(()=>{
-  //   if(cycle){
-  //     if(cycle.birdType.birdId){
-
-  //     }
-  //   }
-  // },[cycle])
-
   useEffect(() => {
     if (tab && tab !== selectedIndex) {
       setSelectedIndex(tab);
@@ -74,7 +66,7 @@ const CycleLogs = ({ tab, cycle }: CycleLogsProps) => {
 
   return (
     <Tab.Group selectedIndex={selectedIndex} onChange={handleChange}>
-      <Tab.List className="flex justify-center gap-5 w-full mb-10 overflow-x-auto overflow-hidden no-scrollbar">
+      <Tab.List className="flex justify-center gap-5 w-full mb-16 overflow-x-auto overflow-hidden no-scrollbar">
         {Object.entries(logs).map((logType) => (
           <Tab
             key={logType[0]}

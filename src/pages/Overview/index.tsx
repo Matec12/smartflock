@@ -2,7 +2,7 @@ import { Page } from "@/components/Global/Page";
 import { BreadCrumbs, H5 } from "@/components/UI";
 import { useAuth } from "@/hooks";
 import { isAdmin, isOrganizationAdmin } from "@/api/auth/types";
-import StatsHorizontal from "@/components/Widgets/StatsHorizontal";
+import { StatsHorizontal } from "@/components/Widgets";
 import {
   useGetOrganizationsQuery,
   useGetOrganizationsStaffsQuery

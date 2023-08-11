@@ -27,16 +27,16 @@ interface CycleStatsCardProps {
 const CycleStatsCard = ({ cycle }: CycleStatsCardProps) => {
   const isMenuDisabled = (menuType: (typeof MENU_ARRAY)[0]): boolean => {
     return (
-      (menuType.title === "Daily Account" && cycle.birdType.birdId !== 1) ||
+      (menuType.title === "Daily Account" && cycle?.birdType?.birdId !== 1) ||
       (menuType.title === "House Record" &&
-        cycle.birdType.birdId !== 1 &&
-        cycle.birdType.birdId !== 2 &&
-        cycle.birdType.birdId !== 5) ||
+        cycle?.birdType?.birdId !== 1 &&
+        cycle?.birdType?.birdId !== 2 &&
+        cycle?.birdType?.birdId !== 5) ||
       (menuType.title === "Non Layer" &&
-        cycle.birdType.birdId !== 3 &&
-        cycle.birdType.birdId !== 4 &&
-        cycle.birdType.birdId !== 6 &&
-        cycle.birdType.birdId !== 7)
+        cycle?.birdType?.birdId !== 3 &&
+        cycle?.birdType?.birdId !== 4 &&
+        cycle?.birdType?.birdId !== 6 &&
+        cycle?.birdType?.birdId !== 7)
     );
   };
 
@@ -56,7 +56,7 @@ const CycleStatsCard = ({ cycle }: CycleStatsCardProps) => {
                 className="absolute right-1 z-10 mt-2 w-[95%] origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 {MENU_ARRAY.map((menu) => (
-                  <Menu.Item disabled={isMenuDisabled(menu)}>
+                  <Menu.Item key={menu.title} disabled={isMenuDisabled(menu)}>
                     {({ active }) => (
                       <li
                         className={clsxm(

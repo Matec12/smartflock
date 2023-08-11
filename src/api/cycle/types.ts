@@ -5,11 +5,20 @@ export interface BirdType {
   birdId: 1 | 2 | 3 | 4 | 5 | 6 | 7;
 }
 
+export interface FeedType {
+  _id: string;
+  name: string;
+  description: string;
+  feedId: 1 | 2 | 3 | 4 | 5 | 6;
+}
+
 export interface Cycle {
   _id: string;
   name: string;
   description?: string;
   organization: string;
+  numberOfBirds: number;
+  costOfFeedPerKg: number;
   birdType: BirdType;
   startDate: string;
   endDate: string;
@@ -88,9 +97,14 @@ export interface BroilerLog {
   numberOfBirds: number;
   mortality: number;
   culls: number;
-  feed: number;
-  cumulativeFeed: number;
+  feedType: FeedType;
+  feedConsumed: number;
+  cumulativeFeedConsumed: number;
+  feedConsumedPerBird: number;
+  cumulativeFeedConsumedPerBird: number;
   weeklyWeightGain: number;
+  averageWeeklyWeightGainPerBird: number;
+  cumulativeAverageWeeklyWeightGainPerBird: number;
   drugsVaccinationCost: number;
   costOfFeeding: number;
   costOfLabour: number;
@@ -109,7 +123,14 @@ export type CreateHouseRecordLogPayload = Omit<
   "_id" | "createdAt" | "updatedAt"
 >;
 
-export type CreateBroilerLogPayload = Omit<
-  Cycle,
-  "_id" | "createdAt" | "updatedAt"
->;
+export type CreateBroilerLogPayload = {
+  date: string;
+  mortality: number;
+  culls: number;
+  feedType: string;
+  feedConsumed: string;
+  weeklyWeightGain: string;
+  drugsVaccinationCost: number;
+  costOfLabour: number;
+  remarks?: string;
+};

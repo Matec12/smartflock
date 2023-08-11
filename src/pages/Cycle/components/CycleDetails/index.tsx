@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetCyclesQuery } from "@/api/cycle";
 import { Page } from "@/components/Global";
-import { BreadCrumbs } from "@/components/UI";
+import { BreadCrumbs, Card, CardBody, Loader } from "@/components/UI";
 import { CreateUpdateCycle } from "../CreateUpdateCycle";
 import { CycleDetailsCard } from "./components/CycleDetailsCard";
 import { CycleStatsCard } from "./components/CycleStatsCard";
@@ -21,7 +21,23 @@ const CycleDetails = () => {
   };
 
   if (isLoading) {
-    return "Loading";
+    return (
+      <div className="w-full h-[calc(100vh-5rem)] flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
+
+  if (!cycle) {
+    return (
+      <section className="flex justify-center h-[calc(100vh-15rem)] w-full items-center">
+        <Card className="max-h-[100px]">
+          <CardBody className=" flex items-center justify-center">
+            Cycle does not exist
+          </CardBody>
+        </Card>
+      </section>
+    );
   }
 
   return (

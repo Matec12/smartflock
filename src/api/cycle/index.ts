@@ -10,6 +10,7 @@ import {
   CreateHouseRecordLogPayload,
   Cycle,
   DailyAccountLog,
+  FeedType,
   GetCycleParams,
   HouseRecordLog
 } from "./types";
@@ -41,13 +42,35 @@ export const useGetBirdTypesQuery = () =>
  * org get all cycles
  * @returns
  */
+const _getFeedTypesRequest = async (): Promise<
+  ApiResponse<{ message: string; feeds: FeedType[] }>
+> => {
+  const { data } = await axios.get("feeds");
+  return data;
+};
+
+/**
+ * hook wrapper
+ * @param user
+ * @returns
+ */
+export const useGetFeedTypesQuery = () =>
+  useQuery({
+    queryKey: ["feeds"],
+    queryFn: () => _getFeedTypesRequest()
+  });
+
+/**
+ * org get all cycles
+ * @returns
+ */
 const _getCyclesRequest = async (
   params: GetCycleParams
 ): Promise<ApiResponse<{ message: string; cycles: Cycle[] }>> => {
   const baseURL = "cycles";
-
   const url = buildUrlWithParams(baseURL, { ...params });
   const { data } = await axios.get(url);
+  console.log(data);
   return data;
 };
 
@@ -60,7 +83,8 @@ export const useGetCyclesQuery = (params?: GetCycleParams) =>
   useQuery({
     queryKey: ["cycles", { ...params }],
     retry: false,
-    queryFn: () => _getCyclesRequest({ ...params })
+    queryFn: () => _getCyclesRequest({ ...params }),
+    onError: (error) => console.log(error)
   });
 
 /**
@@ -88,7 +112,7 @@ export const useCreateCycleMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["cycles"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -128,7 +152,7 @@ export const useUpdateCycleMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["cycles"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -164,7 +188,7 @@ export const useArchiveCycleMutation = () => {
       toast.success(data.payload.message);
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -233,7 +257,7 @@ export const useCreatDailyAccountLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["daily_account_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -273,7 +297,7 @@ export const useUpdateDailyAccountLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["daily_account_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -343,7 +367,7 @@ export const useCreatHouseRecordLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["house_record_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -383,7 +407,7 @@ export const useUpdateHouseRecordLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["house_record_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -422,7 +446,7 @@ const _createBroilerLogRequest = async (
   cycle: string,
   payload: CreateBroilerLogPayload
 ): Promise<ApiResponse<{ message: string; broiler_logs: BroilerLog }>> => {
-  const { data } = await axios.post(`broiler_logs/create/${cycle}`, payload);
+  const { data } = await axios.post(`broiler_logs/${cycle}/create`, payload);
   return data;
 };
 
@@ -447,7 +471,7 @@ export const useCreateBroilerLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["broiler_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
@@ -487,7 +511,7 @@ export const useUpdateBroilerLogMutation = () => {
       queryClient.invalidateQueries({ queryKey: ["broiler_logs"] });
     },
     onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+      error?.data && toast.error(error?.data?.error);
     }
   });
 
