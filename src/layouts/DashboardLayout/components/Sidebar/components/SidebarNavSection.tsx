@@ -14,7 +14,13 @@ const SidebarNavSection = ({
   ...other
 }: ISidebarNavSectionProps) => {
   return (
-    <div {...other} className="">
+    <div
+      {...other}
+      className={clsxm(
+        "overflow-y-scroll lg:h-[calc(100vh-12rem)]",
+        isCollapse ? "lg:w-[88px]" : "lg:w-[280px]"
+      )}
+    >
       {sidebarConfig.map((group) => (
         <div key={group.subheader} className="">
           <ListSubheaderStyle

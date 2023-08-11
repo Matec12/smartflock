@@ -44,8 +44,8 @@ const CycleDetails = Loadable(
   lazy(() => import("../pages/Cycle/components/CycleDetails"))
 );
 const Staffs = Loadable(lazy(() => import("../pages/Staffs")));
-
 const Activity = Loadable(lazy(() => import("../pages/Activity")));
+const Settings = Loadable(lazy(() => import("../pages/Settings")));
 
 /**
  * App Router
@@ -89,6 +89,8 @@ const router = createBrowserRouter([
       { path: "system-data/cycles", element: <Cycle /> },
       { path: "system-data/cycles/:id/:name/:tab", element: <CycleDetails /> },
       { path: "organization/staffs", element: <Staffs /> },
+      { path: "settings/:tab", element: <Settings /> },
+
       { path: "activity", element: <Activity /> },
 
       {

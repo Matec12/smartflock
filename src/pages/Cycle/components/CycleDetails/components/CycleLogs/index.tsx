@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Tab } from "@headlessui/react";
+import { Icon } from "@iconify/react";
 import DailyAccountLog from "./DailyAccountLog";
 import HouseRecordLog from "./HouseRecordLog";
 import BroilerLog from "./BroilerLog";
 import { Cycle } from "@/api/cycle/types";
 import { clsxm, slugify } from "@/lib/utils";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface CycleLogsProps {
   tab: number;

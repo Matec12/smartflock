@@ -26,7 +26,7 @@ axiosInstance.interceptors.response.use(
       return;
     } else if (error.response.status === 401) {
       toast.error("UnAuthorized");
-      setTimeout(() => localStorage.removeItem("accessToken"), 2000);
+      setTimeout(() => localStorage.removeItem("accessToken"), 1000);
     } else {
       return Promise.reject(error);
     }

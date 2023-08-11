@@ -81,7 +81,7 @@ const DashboardSidebar = ({
   return (
     <div
       className={clsxm(
-        "sidebar z-30 lg:shrink-0 lg:transition-width lg:duration-200",
+        "sidebar z-50 lg:shrink-0 lg:transition-width lg:duration-200 overflow-y-auto",
         isCollapse ? "lg:w-[88px]" : "lg:w-[280px]",
         {
           absolute: collapseClick
@@ -105,7 +105,7 @@ const DashboardSidebar = ({
           onMouseEnter={onHoverEnter}
           onMouseLeave={onHoverLeave}
           className={clsxm(
-            " min-h-full w-[280px] border-r border-dashed transition-width duration-300",
+            "min-h-full w-[280px] border-r border-dashed transition-width duration-300 fixed overflow-y-auto bg-white",
             { "w-[88px]": isCollapse },
             { "shadow-lg backdrop-blur-[6px]": collapseHover }
           )}

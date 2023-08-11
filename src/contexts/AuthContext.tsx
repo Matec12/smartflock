@@ -120,7 +120,9 @@ interface AuthContextValue extends AuthState {
   login: (payload: LoginPayload) => Promise<void>;
   logout: () => Promise<void>;
   register: (payload: RegisterPayload) => Promise<void>;
-  updateUser: (payload: RegisterPayload) => Promise<void>;
+  updateUser: (
+    payload: Pick<RegisterPayload, "username" | "fullname">
+  ) => Promise<void>;
   updatePassword: (payload: UpdatePasswordPayload) => Promise<void>;
 }
 
@@ -247,7 +249,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     oldPassword: string;
     newPassword: string;
   }) => {
-    const response = await axios.put<
+    const response = await axios.post<
       ApiResponse<{ message: string; user: User }>
     >("password/update", payload);
 

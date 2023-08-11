@@ -70,7 +70,7 @@ export const useAdminGetOrganizationsDetailsQuery = (
  * @returns
  */
 const _orgGetOrganizationsDetailsRequest = async (): Promise<
-  ApiResponse<{ message: string; organizations: Organization }>
+  ApiResponse<{ message: string; organization: Organization }>
 > => {
   const { data } = await axios.get(`organizations/my-organization`);
   return data;
@@ -95,7 +95,7 @@ export const useOrgGetOrganizationsDetailsQuery = (user: User) =>
  * @returns
  */
 const _userGetOrganizationsDetailsRequest = async (): Promise<
-  ApiResponse<{ message: string; organizations: Organization }>
+  ApiResponse<{ message: string; organization: Organization }>
 > => {
   const { data } = await axios.get(`organizations/current`);
   return data;
@@ -119,10 +119,9 @@ export const useUserGetOrganizationsDetailsQuery = () =>
  * @returns
  */
 const _updateOrganizationRequest = async (
-  id: string,
-  payload: Pick<Organization, "name">
+  payload: Pick<Organization, "name" | "address">
 ): Promise<ApiResponse> => {
-  const { data } = await axios.put(`organizations/${id}`, payload);
+  const { data } = await axios.put(`organizations/update`, payload);
   return data;
 };
 
@@ -132,14 +131,14 @@ const _updateOrganizationRequest = async (
  * @returns
  */
 export const useUpdateOrganizationMutation = () => {
-  const updateOrganizationMutation = useMutation({
-    mutationFn: ({
-      id,
-      payload
-    }: {
-      id: string;
-      payload: Pick<Organization, "name">;
-    }) => _updateOrganizationRequest(id, payload),
+  const updateOrganizationMutation = useMutation(_updateOrganizationRequest, {
+    // mutationFn: ({
+    //   id,
+    //   payload
+    // }: {
+    //   id: string;
+    //   payload: Pick<Organization, "name" | "address">;
+    // }) => _updateOrganizationRequest(id, payload),
     onSuccess: (data) => {
       toast.success(data.payload.message);
     },

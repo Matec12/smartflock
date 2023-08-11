@@ -78,7 +78,7 @@ export const SidebarConfig: SidebarConfigProps[] = [
       {
         title: "Settings",
         icon: "icon-park-twotone:file-settings",
-        path: "/dashboard/settings",
+        path: "/dashboard/settings/account",
         role: [UserRole.Admin, UserRole.OrgAdmin, UserRole.OrgStaff]
       }
     ]
