@@ -27,7 +27,7 @@ export const useResendEmailMutation = () => {
       toast.success(data.payload.message);
     },
     onError: (error: RequestError) => {
-      toast.error(error.response?.data.error);
+      error.response && toast.error(error.response?.data.error);
     }
   });
 
@@ -60,7 +60,7 @@ export const useVerifyEmailMutation = () => {
       }, 2000);
     },
     onError: (error: RequestError) => {
-      toast.error(error.response?.data?.error);
+      error.response && toast.error(error.response?.data.error);
     }
   });
 

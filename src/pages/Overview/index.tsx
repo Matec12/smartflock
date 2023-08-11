@@ -1,7 +1,7 @@
 import { Page } from "@/components/Global/Page";
 import { BreadCrumbs, H5 } from "@/components/UI";
 import { useAuth } from "@/hooks";
-import { isAdmin, isOrganizationAdmin } from "@/api/auth/types";
+import { isAdmin, isOrganization, isOrganizationAdmin } from "@/api/auth/types";
 import { StatsHorizontal } from "@/components/Widgets";
 import {
   useGetOrganizationsQuery,
@@ -33,64 +33,57 @@ const Overview = () => {
       <div className="my-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {isAdmin(user!) && (
           <>
-            <div>
-              <StatsHorizontal
-                icon="ic:twotone-people-alt"
-                iconClassName="bg-primary text-primary"
-                stats={String(orgData?.payload?.organizations?.length)}
-                isLoading={isLoading}
-                statTitle="Organizations"
-              />
-            </div>
-            <div>
-              <StatsHorizontal
-                icon="ic:twotone-people-alt"
-                iconClassName="bg-success text-success"
-                stats={String(userData?.payload?.users?.length)}
-                statTitle="Users"
-                isLoading={userLoader}
-              />
-            </div>
+            <StatsHorizontal
+              icon="ic:twotone-people-alt"
+              iconClassName="bg-primary text-primary"
+              stats={String(orgData?.payload?.organizations?.length)}
+              isLoading={isLoading}
+              statTitle="Organizations"
+            />
+
+            <StatsHorizontal
+              icon="ic:twotone-people-alt"
+              iconClassName="bg-success text-success"
+              stats={String(userData?.payload?.users?.length)}
+              statTitle="Users"
+              isLoading={userLoader}
+            />
           </>
         )}
-        <div>
-          <StatsHorizontal
-            icon="icon-park-twotone:cycle-one"
-            iconClassName="bg-info text-info"
-            stats={String(cycleData?.payload?.cycles?.length)}
-            statTitle="Cycles"
-            isLoading={cycleLoader}
-          />
-        </div>
+        <StatsHorizontal
+          icon="icon-park-twotone:cycle-one"
+          iconClassName="bg-info text-info"
+          stats={String(cycleData?.payload?.cycles?.length)}
+          statTitle="Cycles"
+          isLoading={cycleLoader}
+        />
         {isOrganizationAdmin(user!) && (
           <>
-            <div>
-              <StatsHorizontal
-                icon="ic:twotone-people-alt"
-                iconClassName="bg-primary text-primary"
-                stats={String(staffData?.payload?.staffs?.length)}
-                statTitle="Staffs"
-                isLoading={staffLoader}
-              />
-            </div>
-            <div>
-              <StatsHorizontal
-                icon="icon-park-twotone:cycle-one"
-                iconClassName="bg-success text-success"
-                stats={String(activeCycles?.length)}
-                statTitle="Active Cycles"
-                isLoading={cycleLoader}
-              />
-            </div>
-            <div>
-              <StatsHorizontal
-                icon="icon-park-twotone:cycle-one"
-                iconClassName="bg-danger text-danger"
-                stats={String(archivedCycles?.length)}
-                statTitle="Archived Cycles"
-                isLoading={cycleLoader}
-              />
-            </div>
+            <StatsHorizontal
+              icon="ic:twotone-people-alt"
+              iconClassName="bg-primary text-primary"
+              stats={String(staffData?.payload?.staffs?.length)}
+              statTitle="Staffs"
+              isLoading={staffLoader}
+            />
+          </>
+        )}
+        {isOrganization(user!) && (
+          <>
+            <StatsHorizontal
+              icon="icon-park-twotone:cycle-one"
+              iconClassName="bg-success text-success"
+              stats={String(activeCycles?.length)}
+              statTitle="Active Cycles"
+              isLoading={cycleLoader}
+            />
+            <StatsHorizontal
+              icon="icon-park-twotone:cycle-one"
+              iconClassName="bg-danger text-danger"
+              stats={String(archivedCycles?.length)}
+              statTitle="Archived Cycles"
+              isLoading={cycleLoader}
+            />
           </>
         )}
       </div>

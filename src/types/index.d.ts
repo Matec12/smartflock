@@ -23,7 +23,7 @@ type ApiResponse<T extends ApiPayload = ApiPayload> = {
   success: boolean;
 };
 
-type RequestError = { data: ApiResponse<null> };
+type RequestError = { response: { data: ApiResponse<null> } };
 
 type SelectOptions = {
   value: string;

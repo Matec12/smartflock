@@ -111,8 +111,8 @@ export const useCreateCycleMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["cycles"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -151,8 +151,8 @@ export const useUpdateCycleMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["cycles"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -187,8 +187,8 @@ export const useArchiveCycleMutation = () => {
     onSuccess: (data) => {
       toast.success(data.payload.message);
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -256,8 +256,8 @@ export const useCreatDailyAccountLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["daily_account_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -296,8 +296,8 @@ export const useUpdateDailyAccountLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["daily_account_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -366,8 +366,8 @@ export const useCreatHouseRecordLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["house_record_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -406,8 +406,8 @@ export const useUpdateHouseRecordLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["house_record_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -470,8 +470,8 @@ export const useCreateBroilerLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["broiler_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -510,8 +510,8 @@ export const useUpdateBroilerLogMutation = () => {
       toast.success(data.payload.message);
       queryClient.invalidateQueries({ queryKey: ["broiler_logs"] });
     },
-    onError: (error: RequestError) => {
-      error?.data && toast.error(error?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 

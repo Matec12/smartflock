@@ -38,11 +38,14 @@ const ResetPassword = Loadable(
 
 // DASHBOARD
 const Overview = Loadable(lazy(() => import("../pages/Overview")));
-const Activity = Loadable(lazy(() => import("../pages/Activity")));
+
 const Cycle = Loadable(lazy(() => import("../pages/Cycle")));
 const CycleDetails = Loadable(
   lazy(() => import("../pages/Cycle/components/CycleDetails"))
 );
+const Staffs = Loadable(lazy(() => import("../pages/Staffs")));
+
+const Activity = Loadable(lazy(() => import("../pages/Activity")));
 
 /**
  * App Router
@@ -83,9 +86,10 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "overview", element: <Overview /> },
-      { path: "activity", element: <Activity /> },
       { path: "system-data/cycles", element: <Cycle /> },
       { path: "system-data/cycles/:id/:name/:tab", element: <CycleDetails /> },
+      { path: "organization/staffs", element: <Staffs /> },
+      { path: "activity", element: <Activity /> },
 
       {
         path: "verify-email/:token",

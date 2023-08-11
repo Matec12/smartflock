@@ -42,19 +42,19 @@ export const SidebarConfig: SidebarConfigProps[] = [
       {
         title: "Users",
         icon: "icon-park-twotone:hospital-four",
-        path: "/dashboard/users/specialists",
+        path: "/dashboard/users/users",
         role: [UserRole.Admin]
       },
       {
         title: "Organizations",
         icon: "icon-park-twotone:hospital-four",
-        path: "/dashboard/users/specialists",
+        path: "/dashboard/users/organizations",
         role: [UserRole.Admin]
       },
       {
         title: "Staffs",
         icon: "ic:twotone-people-alt",
-        path: "/dashboard/users/clients",
+        path: "/dashboard/organization/staffs",
         role: [UserRole.OrgAdmin]
       }
     ]

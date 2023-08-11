@@ -1,7 +1,8 @@
 import axios from "..";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Organization } from "./types";
 import {
+  LoginPayload,
   RegisterPayload,
   User,
   isAdmin,
@@ -142,8 +143,8 @@ export const useUpdateOrganizationMutation = () => {
     onSuccess: (data) => {
       toast.success(data.payload.message);
     },
-    onError: (error: RequestError) => {
-      error?.response && toast.error(error.response?.data?.error);
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
     }
   });
 
@@ -182,7 +183,7 @@ export const useGetOrganizationsStaffsQuery = (user: User | null) =>
  * @returns
  */
 const _createOrganizationStaffRequest = async (
-  payload: RegisterPayload
+  payload: Omit<RegisterPayload, "organizationName">
 ): Promise<ApiResponse<{ message: string; staff: User }>> => {
   const { data } = await axios.post("organizations/add-staff", payload);
   return data;
@@ -194,14 +195,17 @@ const _createOrganizationStaffRequest = async (
  * @returns
  */
 export const useCreateOrganizationStaffMutation = () => {
+  const queryClient = useQueryClient();
+
   const createOrganizationStaffMutation = useMutation(
     _createOrganizationStaffRequest,
     {
       onSuccess: (data) => {
         toast.success(data.payload.message);
+        queryClient.invalidateQueries({ queryKey: ["staffs"] });
       },
-      onError: (error: RequestError) => {
-        error?.response && toast.error(error.response?.data?.error);
+      onError: (err: RequestError) => {
+        err.response && toast.error(err?.response?.data.error);
       }
     }
   );
@@ -212,13 +216,17 @@ export const useCreateOrganizationStaffMutation = () => {
 // ====================================
 
 /**
- * current toggle staff access
+ * current reset staff password
  * @returns
  */
-const _toggleOrganizationStaffRequest = async (): Promise<
-  ApiResponse<{ message: string; staffs: User[] }>
-> => {
-  const { data } = await axios.post(`users/toggle-staff-access`);
+const _resetOrganizationStaffPasswordRequest = async (
+  userId: string,
+  payload: Pick<LoginPayload, "email">
+): Promise<ApiResponse<{ message: string; staffs: User[] }>> => {
+  const { data } = await axios.post(
+    `password/reset-staff-password/${userId}`,
+    payload
+  );
   return data;
 };
 
@@ -227,15 +235,61 @@ const _toggleOrganizationStaffRequest = async (): Promise<
  * @param
  * @returns
  */
-export const useToggleOrganizationsStaffsQuery = () => {
+export const useResetOrganizationsStaffPasswordsQuery = () => {
+  const queryClient = useQueryClient();
+
+  const resetOrganizationStaffPasswordMutation = useMutation({
+    mutationFn: ({
+      userId,
+      payload
+    }: {
+      userId: string;
+      payload: Pick<LoginPayload, "email">;
+    }) => _resetOrganizationStaffPasswordRequest(userId, payload),
+    onSuccess: (data) => {
+      toast.success(data.payload.message);
+      queryClient.invalidateQueries({ queryKey: ["staffs"] });
+    },
+    onError: (err: RequestError) => {
+      err.response && toast.error(err?.response?.data.error);
+    }
+  });
+
+  return resetOrganizationStaffPasswordMutation;
+};
+
+// ====================================
+
+/**
+ * current toggle staff access
+ * @returns
+ */
+const _toggleOrganizationStaffRequest = async (
+  userId: string
+): Promise<ApiResponse<{ message: string; staffs: User[] }>> => {
+  const { data } = await axios.put(`users/toggle-staff-access/${userId}`);
+  return data;
+};
+
+/**
+ * hook wrapper
+ * @param
+ * @returns
+ */
+export const useToggleOrganizationsStaffQuery = () => {
+  const queryClient = useQueryClient();
+
   const toggleOrganizationStaffMutation = useMutation(
     _toggleOrganizationStaffRequest,
     {
+      // mutationFn: ({ userId }: { userId: string }) =>
+      //   _toggleOrganizationStaffRequest(userId),
       onSuccess: (data) => {
         toast.success(data.payload.message);
+        queryClient.invalidateQueries({ queryKey: ["staffs"] });
       },
-      onError: (error: RequestError) => {
-        error?.response && toast.error(error.response?.data?.error);
+      onError: (err: RequestError) => {
+        err.response && toast.error(err?.response?.data.error);
       }
     }
   );

@@ -24,6 +24,7 @@ import {
 } from "@/components/UI";
 import { Cycle } from "@/api/cycle/types";
 import { clsxm } from "@/lib/utils";
+import { formatLocaleDate } from "@/lib/formatTime";
 
 const CreateUpdateCycleSchema = z.object({
   name: z.string().min(5),
@@ -78,8 +79,8 @@ const CreateUpdateCycle = ({
       numberOfBirds: currentRow?.numberOfBirds || 0,
       costOfFeedPerKg: currentRow?.costOfFeedPerKg || 0,
       birdType: currentRow?.birdType?._id || "",
-      startDate: currentRow?.startDate || "",
-      endDate: currentRow?.endDate || ""
+      startDate: currentRow ? formatLocaleDate(currentRow?.startDate!) : "",
+      endDate: currentRow ? formatLocaleDate(currentRow?.endDate!) : ""
     }
   });
 
@@ -117,11 +118,15 @@ const CreateUpdateCycle = ({
   }, [isSuccess]);
 
   return (
-    <Modal open={isOpen} handleClose={handleClose} panelClassName="w-96">
+    <Modal
+      open={isOpen}
+      handleClose={handleClose}
+      panelClassName="w-[650px] max-w-full"
+    >
       <ModalHeader>{currentRow ? "Update Cycle" : "Create Cycle"}</ModalHeader>
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="overflow-y-scroll px-6 py-4">
+          <div className="overflow-y-scroll px-6 py-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
             <FormGroup>
               <FormField
                 control={control}

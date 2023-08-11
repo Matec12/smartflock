@@ -3,9 +3,9 @@ import numeral from "numeral";
 
 export const fCurrency = (number: number | string) => {
   // return numeral(number).format(Number.isInteger(number) ? '#0,0' : '#0,0.00');
-  return new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN'
+  return new Intl.NumberFormat("en-NG", {
+    style: "currency",
+    currency: "NGN"
   }).format(Number(number || 0));
 };
 

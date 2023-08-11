@@ -2,7 +2,6 @@ import React from "react";
 import { clsxm } from "@/lib/utils";
 import { BadgeVariant, BadgeColor } from "@/types/types";
 
-
 interface BadgeProps extends React.ComponentPropsWithRef<"span"> {
   variant?: BadgeVariant;
   color?: BadgeColor;

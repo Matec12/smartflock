@@ -5,7 +5,7 @@ export enum UserRole {
 }
 
 export interface User {
-  id: string;
+  _id: string;
   email: string;
   username: string;
   fullname: string;
@@ -14,6 +14,7 @@ export interface User {
   isActive: boolean;
   organizationName: string;
   organizationId: string;
+  createdAt: string;
 }
 
 export type RegisterPayload = {
