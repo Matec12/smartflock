@@ -61,7 +61,7 @@ const BaseOptionChart = (): ApexOptions => {
   return {
     // Colors
     colors: [
-      '#8244B2',
+      '#03440C',
       '#468EB8',
       '#106190',
       '#E3A811',
