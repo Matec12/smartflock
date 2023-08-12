@@ -27,7 +27,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 };
 
 export default defineConfig({
-  base: "./",
+  // base: "./",
   plugins: [react(), VitePWA(manifestForPlugin)],
   resolve: {
     alias: {
