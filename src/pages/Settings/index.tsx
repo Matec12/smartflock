@@ -51,8 +51,8 @@ const Settings = () => {
   }, [selectedIndex]);
 
   return (
-    <Page title="Cycle">
-      <BreadCrumbs breadCrumbTitle="Cycle" breadCrumbActive="Cycle" />
+    <Page title="Settings">
+      <BreadCrumbs breadCrumbTitle="Settings" breadCrumbActive="Settings" />
       <Tab.Group selectedIndex={selectedIndex} onChange={handleChange}>
         <Tab.List className="flex justify-center gap-5 w-full mb-16 overflow-x-auto overflow-hidden no-scrollbar">
           {Object.entries(settings).map((setting) => (
