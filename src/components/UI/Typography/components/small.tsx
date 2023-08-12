@@ -14,4 +14,4 @@ const Small: React.FC<SmallProps> = ({ children, className, ...rest }) => {
   );
 };
 
-export default Small;
+export { Small };
