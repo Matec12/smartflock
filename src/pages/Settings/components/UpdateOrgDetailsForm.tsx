@@ -56,7 +56,7 @@ const UpdateOrgDetailsForm = () => {
       setValue("name", data?.payload?.organization?.name);
       setValue("address", data?.payload?.organization?.address);
     }
-  }, [data]);
+  }, [data, setValue]);
 
   return (
     <Card>

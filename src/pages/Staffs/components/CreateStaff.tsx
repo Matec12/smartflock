@@ -72,6 +72,7 @@ const CreateStaff = ({ isOpen, handleClose }: CreateStaffProps) => {
     if (isSuccess) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   return (

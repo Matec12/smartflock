@@ -109,12 +109,14 @@ const CreateUpdateCycle = ({
           ?.value as string
       );
     }
-  }, [currentRow]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRow, setValue]);
 
   useEffect(() => {
     if (isSuccess) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   return (

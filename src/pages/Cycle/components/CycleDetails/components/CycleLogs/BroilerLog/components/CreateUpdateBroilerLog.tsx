@@ -104,6 +104,7 @@ const CreateUpdateBroilerLog = ({
     if (isSuccess) {
       handleClose();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   const {
