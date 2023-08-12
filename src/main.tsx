@@ -4,6 +4,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { CollapseDrawerProvider } from "./contexts/CollapseDrawerContext.tsx";
 import { Toaster } from "react-hot-toast";
+import { GlobalStyle } from "./styles/global-styles.ts";
 import App from "./App.tsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <HelmetProvider>
       <AuthProvider>
         <CollapseDrawerProvider>
+          <GlobalStyle />
           <Toaster
             position="top-center"
             toastOptions={{

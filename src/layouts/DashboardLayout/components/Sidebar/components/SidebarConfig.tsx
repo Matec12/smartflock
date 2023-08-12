@@ -41,7 +41,7 @@ export const SidebarConfig: SidebarConfigProps[] = [
     items: [
       {
         title: "Users",
-        icon: "icon-park-twotone:hospital-four",
+        icon: "ic:twotone-people-alt",
         path: "/dashboard/users/users",
         role: [UserRole.Admin]
       },

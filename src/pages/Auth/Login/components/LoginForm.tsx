@@ -44,8 +44,12 @@ const LoginForm = () => {
     mode: "all",
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      email: queryParams ? atob(queryParams.get("email") as string) : "",
-      password: queryParams ? atob(queryParams.get("password") as string) : ""
+      email: queryParams.get("email")
+        ? atob(queryParams.get("email") as string)
+        : "",
+      password: queryParams.get("password")
+        ? atob(queryParams.get("password") as string)
+        : ""
     }
   });
 
@@ -64,11 +68,8 @@ const LoginForm = () => {
     formState: { errors, touchedFields, isDirty, isValid },
     handleSubmit,
     register,
-    control,
-    getValues
+    control
   } = form;
-
-  console.log(getValues(), { isDirty, isValid });
 
   return (
     <Form {...form}>

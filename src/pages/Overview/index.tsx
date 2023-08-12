@@ -9,6 +9,10 @@ import {
 } from "@/api/organization";
 import { useGetUsersQuery } from "@/api/user";
 import { useGetCyclesQuery } from "@/api/cycle";
+import { TemperatureChart } from "./components/TemperatureChart";
+import { HumidityChart } from "./components/HumidityChart";
+import { AmmoniaGasChart } from "./components/AmmoniaGasChart";
+import { WaterLevelChart } from "./components/WaterLevelChart";
 
 const Overview = () => {
   const { user } = useAuth();
@@ -86,6 +90,40 @@ const Overview = () => {
             />
           </>
         )}
+        <StatsHorizontal
+          icon="material-symbols:humidity-mid"
+          iconClassName="bg-primary text-primary"
+          stats="88.12"
+          statTitle="Humidity"
+          isLoading={staffLoader}
+        />
+        <StatsHorizontal
+          icon="solar:temperature-bold-duotone"
+          iconClassName="bg-primary text-primary"
+          stats="26.50"
+          statTitle="Temperature"
+          isLoading={staffLoader}
+        />
+        <StatsHorizontal
+          icon="icon-park-twotone:water-rate-two"
+          iconClassName="bg-primary text-primary"
+          stats="84"
+          statTitle="Water Level"
+          isLoading={staffLoader}
+        />
+        <StatsHorizontal
+          icon="ic:twotone-gas-meter"
+          iconClassName="bg-primary text-primary"
+          stats="12"
+          statTitle="Gas Level"
+          isLoading={staffLoader}
+        />
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <TemperatureChart />
+        <HumidityChart />
+        <AmmoniaGasChart />
+        <WaterLevelChart />
       </div>
     </Page>
   );
