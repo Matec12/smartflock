@@ -1,19 +1,15 @@
 import merge from "lodash/merge";
+import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
+import { useGetGasReadingsQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
-import { Card, CardHeader } from "@/components/UI";
+import { Card, CardHeader, Skeleton } from "@/components/UI";
 
-const ammoniaGasData = [
-  { time: "00:00", ammoniaLevel: 10 },
-  { time: "03:00", ammoniaLevel: 12 },
-  { time: "06:00", ammoniaLevel: 15 },
-  { time: "09:00", ammoniaLevel: 18 },
-  { time: "12:00", ammoniaLevel: 20 },
-  { time: "15:00", ammoniaLevel: 22 },
-  { time: "18:00", ammoniaLevel: 25 }
-  // ... more data points ...
-];
 const AmmoniaGasChart = () => {
+  const { data, isLoading } = useGetGasReadingsQuery();
+
+  const ammoniaGasData = data?.payload?.data ? data?.payload?.data : [];
+
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
     chart: {
@@ -21,7 +17,9 @@ const AmmoniaGasChart = () => {
       height: 350
     },
     xaxis: {
-      categories: ammoniaGasData.map((item) => item.time),
+      categories: ammoniaGasData
+        ?.slice(-10)
+        ?.map((item) => format(new Date(item?.timestamp), "HH:mm")),
       title: {
         text: "Time"
       }
@@ -35,16 +33,20 @@ const AmmoniaGasChart = () => {
 
   const chartSeries = [
     {
-      name: "Ammonia Gas",
-      data: ammoniaGasData.map((item) => item.ammoniaLevel)
+      name: "Ammonia Gas Level",
+      data: ammoniaGasData?.slice(-10).map((item) => item.value)
     }
   ];
+
+  if (isLoading) {
+    return <Skeleton className="w-full h-96" />;
+  }
 
   return (
     <Card>
       <CardHeader>Ammonia Gas Readings</CardHeader>
 
-      <div className="mt-12 mx-12">
+      <div className="mt-12 mx-6">
         <ReactApexChart
           type="area"
           series={chartSeries}

@@ -50,3 +50,9 @@ type TableActions = {
   action: () => void;
   privilege?: number[];
 };
+
+type TabType = {
+  id: number;
+  icon: string;
+  title: string;
+};

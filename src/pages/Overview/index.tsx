@@ -9,6 +9,11 @@ import {
 } from "@/api/organization";
 import { useGetUsersQuery } from "@/api/user";
 import { useGetCyclesQuery } from "@/api/cycle";
+import {
+  useGetGasReadingsQuery,
+  useGetHumTempReadingQuery,
+  useGetWaterLevelQuery
+} from "@/api/readings";
 import { TemperatureChart } from "./components/TemperatureChart";
 import { HumidityChart } from "./components/HumidityChart";
 import { AmmoniaGasChart } from "./components/AmmoniaGasChart";
@@ -21,6 +26,11 @@ const Overview = () => {
   const { data: cycleData, isLoading: cycleLoader } = useGetCyclesQuery();
   const { data: staffData, isLoading: staffLoader } =
     useGetOrganizationsStaffsQuery(user);
+  const { data: gasData, isLoading: gasLoader } = useGetGasReadingsQuery();
+  const { data: waterLevelData, isLoading: waterLoader } =
+    useGetWaterLevelQuery();
+  const { data: humTempData, isLoading: humTempLoader } =
+    useGetHumTempReadingQuery();
 
   const archivedCycles = cycleData?.payload?.cycles?.filter(
     (cycle) => new Date(cycle.endDate) < new Date()
@@ -48,7 +58,7 @@ const Overview = () => {
             <StatsHorizontal
               icon="ic:twotone-people-alt"
               iconClassName="bg-success text-success"
-              stats={String(userData?.payload?.users?.length)}
+              stats={String(userData?.payload?.users?.length || 0)}
               statTitle="Users"
               isLoading={userLoader}
             />
@@ -91,38 +101,44 @@ const Overview = () => {
           </>
         )}
         <StatsHorizontal
+          icon="ic:twotone-gas-meter"
+          iconClassName="bg-primary text-primary"
+          stats={String(gasData?.payload?.data?.slice(-1)[0]?.value)}
+          statTitle="Gas Level"
+          isLoading={gasLoader}
+        />
+        <StatsHorizontal
           icon="material-symbols:humidity-mid"
           iconClassName="bg-primary text-primary"
-          stats="88.12"
+          stats={String(
+            humTempData?.payload?.data?.slice(-1)[0]?.humValue || 0
+          )}
           statTitle="Humidity"
-          isLoading={staffLoader}
+          isLoading={humTempLoader}
         />
         <StatsHorizontal
           icon="solar:temperature-bold-duotone"
           iconClassName="bg-primary text-primary"
-          stats="26.50"
+          stats={String(
+            humTempData?.payload?.data?.slice(-1)[0]?.tempValue || 0
+          )}
           statTitle="Temperature"
-          isLoading={staffLoader}
+          isLoading={humTempLoader}
         />
         <StatsHorizontal
           icon="icon-park-twotone:water-rate-two"
           iconClassName="bg-primary text-primary"
-          stats="84"
+          stats={String(
+            waterLevelData?.payload?.data?.slice(-1)[0]?.value || 0
+          )}
           statTitle="Water Level"
-          isLoading={staffLoader}
-        />
-        <StatsHorizontal
-          icon="ic:twotone-gas-meter"
-          iconClassName="bg-primary text-primary"
-          stats="12"
-          statTitle="Gas Level"
-          isLoading={staffLoader}
+          isLoading={waterLoader}
         />
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <AmmoniaGasChart />
         <TemperatureChart />
         <HumidityChart />
-        <AmmoniaGasChart />
         <WaterLevelChart />
       </div>
     </Page>

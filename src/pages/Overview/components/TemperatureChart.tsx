@@ -1,19 +1,25 @@
 import merge from "lodash/merge";
+import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
+// import { useGetHumTempReadingQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
-import { Card, CardHeader } from "@/components/UI";
+import { Card, CardHeader, Skeleton } from "@/components/UI";
 
 const temperatureData = [
-  { time: "00:00", temperature: 25 },
-  { time: "03:00", temperature: 26 },
-  { time: "06:00", temperature: 27 },
-  { time: "09:00", temperature: 24 },
-  { time: "12:00", temperature: 23 },
-  { time: "15:00", temperature: 22 },
-  { time: "18:00", temperature: 25 }
+  { timestamp: "00:00", humValue: 25 },
+  { timestamp: "03:00", humValue: 26 },
+  { timestamp: "06:00", humValue: 27 },
+  { timestamp: "09:00", humValue: 24 },
+  { timestamp: "12:00", humValue: 23 },
+  { timestamp: "15:00", humValue: 22 },
+  { timestamp: "18:00", humValue: 25 }
 ];
 
 const TemperatureChart = () => {
+  // const { data, isLoading } = useGetHumTempReadingQuery();
+
+  // const temperatureData = data?.payload?.data ? data?.payload?.data : [];
+
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
     chart: {
@@ -21,7 +27,9 @@ const TemperatureChart = () => {
       height: 350
     },
     xaxis: {
-      categories: temperatureData.map((item) => item.time),
+      categories: temperatureData
+        ?.slice(-10)
+        ?.map((item) => item.timestamp),
       title: {
         text: "Time"
       }
@@ -36,9 +44,13 @@ const TemperatureChart = () => {
   const chartSeries = [
     {
       name: "Temperature",
-      data: temperatureData.map((item) => item.temperature)
+      data: temperatureData?.slice(-10).map((item) => item.humValue)
     }
   ];
+
+  // if (isLoading) {
+  //   return <Skeleton className="w-full h-96" />;
+  // }
 
   return (
     <Card>

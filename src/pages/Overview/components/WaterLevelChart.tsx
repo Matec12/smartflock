@@ -1,19 +1,15 @@
 import merge from "lodash/merge";
+import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
+import { useGetWaterLevelQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
-import { Card, CardHeader } from "@/components/UI";
+import { Card, CardHeader, Skeleton } from "@/components/UI";
 
-const waterLevelData = [
-  { time: "00:00", waterLevel: 50 },
-  { time: "03:00", waterLevel: 52 },
-  { time: "06:00", waterLevel: 55 },
-  { time: "09:00", waterLevel: 58 },
-  { time: "12:00", waterLevel: 60 },
-  { time: "15:00", waterLevel: 62 },
-  { time: "18:00", waterLevel: 65 }
-  // ... more data points ...
-];
 const WaterLevelChart = () => {
+  const { data, isLoading } = useGetWaterLevelQuery();
+
+  const waterLevelData = data?.payload?.data ? data?.payload?.data : [];
+
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
     chart: {
@@ -21,7 +17,9 @@ const WaterLevelChart = () => {
       height: 350
     },
     xaxis: {
-      categories: waterLevelData.map((item) => item.time),
+      categories: waterLevelData.map((item) =>
+        format(new Date(item?.timestamp), "HH:mm")
+      ),
       title: {
         text: "Time"
       }
@@ -36,9 +34,13 @@ const WaterLevelChart = () => {
   const chartSeries = [
     {
       name: "Water Level",
-      data: waterLevelData.map((item) => item.waterLevel)
+      data: waterLevelData?.slice(-10).map((item) => item.value)
     }
   ];
+
+  if (isLoading) {
+    return <Skeleton className="w-full h-96" />;
+  }
 
   return (
     <Card>
