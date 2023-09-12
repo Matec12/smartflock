@@ -56,7 +56,7 @@ const CycleDetails = () => {
         <CycleStatsCard cycle={cycle!} />
       </div>
       <div className="mt-10">
-        <CycleLogs cycle={cycle!} tab={Number(tab)} />
+        <CycleLogs cycle={cycle!} tab={tab!} />
       </div>
       {openUpdateCycleModal && (
         <CreateUpdateCycle

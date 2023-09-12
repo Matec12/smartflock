@@ -86,8 +86,20 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "overview", element: <Overview /> },
-      { path: "system-data/cycles", element: <Cycle /> },
-      { path: "system-data/cycles/:id/:name/:tab", element: <CycleDetails /> },
+      {
+        path: "system-data/cycles",
+        children: [
+          {
+            element: <Cycle />,
+            index: true
+          },
+          {
+            path: ":id/:name/:tab",
+            element: <CycleDetails />
+          }
+        ]
+      },
+      // { path: "system-data/cycles/:id/:name/:tab", element: <CycleDetails /> },
       { path: "organization/staffs", element: <Staffs /> },
       { path: "settings/:tab", element: <Settings /> },
 

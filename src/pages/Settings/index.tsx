@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Tab } from "@headlessui/react";
+import { useParams, Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useAuth } from "@/hooks";
 import { Page } from "@/components/Global";
@@ -8,95 +6,107 @@ import { BreadCrumbs } from "@/components/UI";
 import { UpdateDetailsForm } from "./components/UpdateDetailsForm";
 import { UpdatePasswordForm } from "./components/UpdatePasswordForm";
 import { UpdateOrgDetailsForm } from "./components/UpdateOrgDetailsForm";
-import { clsxm } from "@/lib/utils";
+import { clsxm, slugify } from "@/lib/utils";
 import { isOrganization } from "@/api/auth/types";
 
+const SETTINGS: TabType[] = [
+  {
+    id: 1,
+    icon: "solar:user-id-bold-duotone",
+    title: "Account"
+  },
+  {
+    id: 2,
+    icon: "solar:password-bold-duotone",
+    title: "Password"
+  },
+  {
+    id: 3,
+    icon: "ic:twotone-people-alt",
+    title: "Organization"
+  }
+];
+
 const Settings = () => {
-  const navigate = useNavigate();
+  const { tab } = useParams();
   const { user } = useAuth();
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const [settings] = useState({
-    Account: {
-      element: <UpdateDetailsForm />,
-      icon: "icon-park-twotone:egg-one"
-    },
-    Password: {
-      element: <UpdatePasswordForm />,
-      icon: "ph:egg-crack-duotone"
-    },
-    Organization: {
-      element: <UpdateOrgDetailsForm />,
-      icon: "icon-park-twotone:chicken-leg"
+  const renderSettings = () => {
+    switch (Boolean(tab)) {
+      case tab === "account":
+        return <UpdateDetailsForm />;
+      case tab === "password":
+        return <UpdatePasswordForm />;
+      case tab === "organization":
+        return <UpdateOrgDetailsForm />;
+      default:
+        return <UpdateDetailsForm />;
     }
-  });
-
-  const isTabHidden = (setting: any): boolean => {
-    return setting[0] === "Organization" && !isOrganization(user!);
   };
 
-  const handleChange = (value: number) => {
-    setSelectedIndex(value);
+  const isTabHidden = (setting: TabType): boolean => {
+    return setting.title === "Organization" && !isOrganization(user!);
   };
-
-  useEffect(() => {
-    if (selectedIndex === 0) {
-      navigate(`/dashboard/settings/account`);
-    } else if (selectedIndex === 1) {
-      navigate(`/dashboard/settings/password`);
-    } else {
-      navigate(`/dashboard/settings/organization`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedIndex]);
 
   return (
     <Page title="Settings">
       <BreadCrumbs breadCrumbTitle="Settings" breadCrumbActive="Settings" />
-      <Tab.Group selectedIndex={selectedIndex} onChange={handleChange}>
-        <Tab.List className="flex justify-center gap-5 w-full mb-16 overflow-x-auto overflow-hidden no-scrollbar">
-          {Object.entries(settings).map((setting) => (
-            <Tab
-              key={setting[0]}
-              className={({ selected }) =>
-                clsxm(
-                  "outline-none w-full md:w-36 py-2.5 text-base font-semibold leading-5 flex items-center justify-center gap-2 transition all ",
-                  "text-primary-70 hover:text-primary whitespace-nowrap rounded translate-x-0",
-                  {
-                    "bg-primary text-white hover:text-white": selected,
-                    "transform duration-500 ease-in-out": selected
-                  },
-                  {
-                    hidden: isTabHidden(setting)
-                  }
-                )
-              }
-              disabled={isTabHidden(setting)}
-            >
-              <Icon icon={setting[1]?.icon} />
-              {setting[0]}
-            </Tab>
-          ))}
-        </Tab.List>
-        <Tab.Panels>
-          {Object.values(settings).map((setting, idx) => (
-            <Tab.Panel
-              key={idx}
-              className={clsxm(
-                "mx-auto max-w-md bg-white transform transition-transform duration-300 ease-in-out",
-                {
-                  "translate-x-0 opacity-100": idx === selectedIndex,
-                  "-translate-x-full opacity-0": idx !== selectedIndex
-                }
-              )}
-            >
-              {setting.element}
-            </Tab.Panel>
-          ))}
-        </Tab.Panels>
-      </Tab.Group>
+      <div>
+        <div className="flex justify-center gap-5 w-full mb-16 overflow-x-auto overflow-hidden no-scrollbar">
+          {SETTINGS.map((setting) => {
+            const active = slugify(setting.title)?.includes(tab!);
+
+            return (
+              <SettingTab
+                key={setting.title}
+                item={setting}
+                active={active!}
+                isTabHidden={isTabHidden}
+              />
+            );
+          })}
+        </div>
+        <div
+          className={clsxm(
+            "mx-auto max-w-md bg-white transform transition-transform duration-300 ease-in-out"
+          )}
+        >
+          {renderSettings()}
+        </div>
+      </div>
     </Page>
   );
 };
 
 export default Settings;
+
+interface SettingTabProps {
+  item: TabType;
+  active: boolean;
+  isTabHidden: (e: TabType) => boolean;
+}
+
+const SettingTab = ({ item, active, isTabHidden }: SettingTabProps) => {
+  return (
+    <div
+      className={clsxm(
+        "outline-none w-full md:w-36 py-2.5 text-base font-semibold leading-5 flex items-center justify-center gap-2 transition all ",
+        "text-primary-70 hover:text-primary whitespace-nowrap rounded translate-x-0",
+        {
+          "bg-primary text-white hover:text-white": active,
+          "transform duration-500 ease-in-out": active
+        },
+        {
+          hidden: isTabHidden(item)
+        }
+      )}
+    >
+      <Link
+        to={`/dashboard/settings/${slugify(item.title)}`}
+        className="absolute inset-0"
+      />
+      <Icon icon={item?.icon} />
+      <span className="">{item.title}</span>
+    </div>
+  );
+};

@@ -40,7 +40,7 @@ const AccountPopover = () => {
           <Menu.Item>
             {({ active }) => (
               <UnstyledLink
-                href="/dashboard/settings"
+                href="/dashboard/settings/account"
                 className={clsxm(
                   { "bg-gray-100": active },
                   "block px-4 py-2 text-sm text-gray-700"

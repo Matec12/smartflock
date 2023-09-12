@@ -76,11 +76,11 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
   const handleViewDetails = (row: Cycle) => {
     let defaultTab;
     if (row.birdType.birdId === 1) {
-      defaultTab = 0;
+      defaultTab = "daily-account";
     } else if (row.birdType.birdId === 2 || row.birdType.birdId === 5) {
-      defaultTab = 1;
+      defaultTab = "house-record";
     } else {
-      defaultTab = 2;
+      defaultTab = "non-layer";
     }
 
     navigate(
