@@ -51,7 +51,7 @@ export const useGetGasReadingsQuery = () =>
     refetchInterval: 60000,
     onSuccess: (data) => {
       const latestAmmoniaValue = data?.payload?.data?.slice(-1)[0]?.value || 0;
-      // checkAndNotify(latestAmmoniaValue);
+      checkAndNotify(latestAmmoniaValue);
     }
   });
 
@@ -85,7 +85,7 @@ export const useGetWaterLevelQuery = () =>
 const _getHumTempReadingRequest = async (): Promise<
   ApiResponse<{ message: string; data: HumTempReading[] }>
 > => {
-  const { data } = await axios.get("water_level");
+  const { data } = await axios.get("hum_temp");
   return data;
 };
 
@@ -96,7 +96,7 @@ const _getHumTempReadingRequest = async (): Promise<
  */
 export const useGetHumTempReadingQuery = () =>
   useQuery({
-    queryKey: ["water_level"],
+    queryKey: ["hum_temp"],
     queryFn: () => _getHumTempReadingRequest(),
     refetchInterval: 60000
   });

@@ -1,24 +1,24 @@
 import merge from "lodash/merge";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
 import { useGetHumTempReadingQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
 import { Card, CardHeader, Skeleton } from "@/components/UI";
 
-const humidityData = [
-  { timestamp: "00:00", humValue: 25 },
-  { timestamp: "03:00", humValue: 26 },
-  { timestamp: "06:00", humValue: 27 },
-  { timestamp: "09:00", humValue: 24 },
-  { timestamp: "12:00", humValue: 23 },
-  { timestamp: "15:00", humValue: 22 },
-  { timestamp: "18:00", humValue: 25 }
-];
+// const humidityData = [
+//   { timestamp: "00:00", humValue: 25 },
+//   { timestamp: "03:00", humValue: 26 },
+//   { timestamp: "06:00", humValue: 27 },
+//   { timestamp: "09:00", humValue: 24 },
+//   { timestamp: "12:00", humValue: 23 },
+//   { timestamp: "15:00", humValue: 22 },
+//   { timestamp: "18:00", humValue: 25 }
+// ];
 
 const HumidityChart = () => {
-  // const { data, isLoading } = useGetHumTempReadingQuery();
+  const { data, isLoading } = useGetHumTempReadingQuery();
 
-  // const humidityData = data?.payload?.data ? data?.payload?.data : [];
+  const humidityData = data?.payload?.data ? data?.payload?.data : [];
 
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
@@ -46,9 +46,9 @@ const HumidityChart = () => {
     }
   ];
 
-  // if (isLoading) {
-  //   return <Skeleton className="w-full h-96" />;
-  // }
+  if (isLoading) {
+    return <Skeleton className="w-full h-96" />;
+  }
 
   return (
     <Card>

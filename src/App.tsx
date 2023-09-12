@@ -4,6 +4,7 @@ import { useGetGasReadingsQuery } from "./api/readings";
 import router from "./router";
 
 export function App() {
+  // eslint-disable-next-line no-empty-pattern
   const {} = useGetGasReadingsQuery();
 
   useEffect(() => {
