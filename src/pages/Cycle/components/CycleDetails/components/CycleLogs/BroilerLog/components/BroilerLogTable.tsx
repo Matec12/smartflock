@@ -115,7 +115,7 @@ const BroilerLogTable = ({ isLoading, broilerLogs }: BroilerLogTableProps) => {
     {
       id: "culls",
       label: "Culls",
-      render: (row: BroilerLog) => String(row.mortality)
+      render: (row: BroilerLog) => String(row.culls)
     },
     {
       id: "feedType",

@@ -19,6 +19,7 @@ export interface Cycle {
   organization: string;
   numberOfBirds: number;
   costOfFeedPerKg: number;
+  costOfFeedPerBag: number;
   birdType: BirdType;
   startDate: string;
   endDate: string;
@@ -36,7 +37,13 @@ export type GetCycleParams = {
 
 export type CreateCyclePayload = Omit<
   Cycle,
-  "_id" | "isActive" | "isDeleted" | "createdAt" | "updatedAt" | "birdType"
+  | "_id"
+  | "isActive"
+  | "isDeleted"
+  | "createdAt"
+  | "updatedAt"
+  | "birdType"
+  | "costOfFeedPerKg"
 > & {
   birdType: string;
 };

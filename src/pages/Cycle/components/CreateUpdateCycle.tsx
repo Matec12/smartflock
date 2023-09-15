@@ -30,7 +30,7 @@ const CreateUpdateCycleSchema = z.object({
   name: z.string().min(5),
   description: z.string().optional(),
   numberOfBirds: z.number(),
-  costOfFeedPerKg: z.number(),
+  costOfFeedPerBag: z.number(),
   birdType: z.string(),
   startDate: z.string().min(1),
   endDate: z.string().min(1)
@@ -77,7 +77,7 @@ const CreateUpdateCycle = ({
       name: currentRow?.name || "",
       description: currentRow?.description || "",
       numberOfBirds: currentRow?.numberOfBirds || 0,
-      costOfFeedPerKg: currentRow?.costOfFeedPerKg || 0,
+      costOfFeedPerBag: currentRow?.costOfFeedPerBag || 0,
       birdType: currentRow?.birdType?._id || "",
       startDate: currentRow ? formatLocaleDate(currentRow?.startDate!) : "",
       endDate: currentRow ? formatLocaleDate(currentRow?.endDate!) : ""
@@ -94,7 +94,7 @@ const CreateUpdateCycle = ({
   };
 
   const {
-    formState: { errors, touchedFields, isDirty, isValid },
+    formState: { errors, touchedFields, isValid },
     handleSubmit,
     register,
     control,
@@ -195,14 +195,14 @@ const CreateUpdateCycle = ({
             <FormGroup>
               <FormField
                 control={control}
-                name="costOfFeedPerKg"
+                name="costOfFeedPerBag"
                 render={({ field: { value, onChange, ref } }) => (
                   <FormItem>
-                    <FormLabel>Cost of Feed Per Kg</FormLabel>
+                    <FormLabel>Cost of Feed Per Bag</FormLabel>
                     <FormControl>
                       <Input
                         ref={ref}
-                        id="costOfFeedPerKg"
+                        id="costOfFeedPerBag"
                         type="number"
                         placeholder="0"
                         autoComplete="off"
@@ -299,24 +299,13 @@ const CreateUpdateCycle = ({
                 )}
               />
             </FormGroup>
-
-            {/* <FormGroup>
-              <Button
-                disabled={!(isDirty && isValid)}
-                className="w-full text-center"
-                type="submit"
-                isLoading={isLoading}
-              >
-                {currentRow ? "Update" : "Create"}
-              </Button>
-            </FormGroup> */}
           </div>
           <ModalFooter>
             <Button onClick={handleClose} outlined>
               Cancel
             </Button>
             <Button
-              disabled={!(isDirty && isValid)}
+              disabled={!isValid}
               className="text-center"
               type="submit"
               isLoading={isLoading}

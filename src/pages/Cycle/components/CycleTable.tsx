@@ -127,6 +127,11 @@ const CycleTable = ({ isLoading, cycles }: CycleTableProps) => {
       render: (row: Cycle) => row?.numberOfBirds
     },
     {
+      id: "costOfFeedPerBag",
+      label: "Cost of Feed Per Bag",
+      render: (row: Cycle) => row?.costOfFeedPerBag
+    },
+    {
       id: "costOfFeedPerKg",
       label: "Cost of Feed Per Kg",
       render: (row: Cycle) => row?.costOfFeedPerKg
