@@ -1,6 +1,6 @@
-import { hexToRGBA } from '@/lib/hex-to-rgba';
-import { ApexOptions } from 'apexcharts';
-import { createGlobalStyle } from 'styled-components';
+import { hexToRGBA } from "@/lib/hex-to-rgba";
+import { ApexOptions } from "apexcharts";
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   /* Tooltip */
@@ -46,36 +46,35 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 const BaseOptionChart = (): ApexOptions => {
-
   const LABEL_TOTAL = {
     show: true,
-    label: 'Total',
-    color: 'black'
+    label: "Total",
+    color: "black"
   };
 
   const LABEL_VALUE = {
     offsetY: 8,
-    color: 'black'
+    color: "black"
   };
 
   return {
     // Colors
     colors: [
-      '#03440C',
-      '#468EB8',
-      '#106190',
-      '#E3A811',
-      '#166448',
-      '#073855',
-      '#5ACA9A'
+      "#03440C",
+      "#468EB8",
+      "#106190",
+      "#E3A811",
+      "#166448",
+      "#073855",
+      "#5ACA9A"
     ],
 
     // Chart
     chart: {
       toolbar: { show: false },
       zoom: { enabled: false },
-      // animations: { enabled: false },
-      foreColor: 'grey'
+      animations: { enabled: true },
+      foreColor: "grey"
       // fontFamily: theme.typography.fontFamily,
     },
 
@@ -83,13 +82,13 @@ const BaseOptionChart = (): ApexOptions => {
     states: {
       hover: {
         filter: {
-          type: 'lighten',
+          type: "lighten",
           value: 0.04
         }
       },
       active: {
         filter: {
-          type: 'darken',
+          type: "darken",
           value: 0.88
         }
       }
@@ -99,7 +98,7 @@ const BaseOptionChart = (): ApexOptions => {
     fill: {
       opacity: 1,
       gradient: {
-        type: 'vertical',
+        type: "vertical",
         shadeIntensity: 0,
         opacityFrom: 0.4,
         opacityTo: 0,
@@ -113,14 +112,14 @@ const BaseOptionChart = (): ApexOptions => {
     // Stroke
     stroke: {
       width: 3,
-      curve: 'smooth',
-      lineCap: 'round'
+      curve: "smooth",
+      lineCap: "round"
     },
 
     // Grid
     grid: {
       strokeDashArray: 3,
-      borderColor: hexToRGBA('#000000', 0.1)
+      borderColor: hexToRGBA("#000000", 0.1)
     },
 
     // Xaxis
@@ -132,7 +131,7 @@ const BaseOptionChart = (): ApexOptions => {
     // Markers
     markers: {
       size: 0,
-      strokeColors: 'white'
+      strokeColors: "white"
     },
 
     // Tooltip
@@ -145,16 +144,16 @@ const BaseOptionChart = (): ApexOptions => {
     // Legend
     legend: {
       show: true,
-      fontSize: '13px',
-      position: 'top',
-      horizontalAlign: 'right',
+      fontSize: "13px",
+      position: "top",
+      horizontalAlign: "right",
       markers: {
         radius: 12
       },
       fontWeight: 500,
       itemMargin: { horizontal: 12 },
       labels: {
-        colors: 'grey'
+        colors: "grey"
       }
     },
 
@@ -162,7 +161,7 @@ const BaseOptionChart = (): ApexOptions => {
     plotOptions: {
       // Bar
       bar: {
-        columnWidth: '28%',
+        columnWidth: "28%",
         borderRadius: 4
       },
       // Pie + Donut
@@ -178,8 +177,8 @@ const BaseOptionChart = (): ApexOptions => {
       // Radialbar
       radialBar: {
         track: {
-          strokeWidth: '100%',
-          background: 'grey'
+          strokeWidth: "100%",
+          background: "grey"
         },
         dataLabels: {
           value: LABEL_VALUE,
@@ -189,18 +188,18 @@ const BaseOptionChart = (): ApexOptions => {
       // Radar
       radar: {
         polygons: {
-          fill: { colors: ['transparent'] },
-          strokeColors: 'grey',
-          connectorColors: 'grey'
+          fill: { colors: ["transparent"] },
+          strokeColors: "grey",
+          connectorColors: "grey"
         }
       },
       // polarArea
       polarArea: {
         rings: {
-          strokeColor: 'grey'
+          strokeColor: "grey"
         },
         spokes: {
-          connectorColors: 'grey'
+          connectorColors: "grey"
         }
       }
     },
@@ -211,14 +210,14 @@ const BaseOptionChart = (): ApexOptions => {
         // sm
         breakpoint: 600,
         options: {
-          plotOptions: { bar: { columnWidth: '40%' } }
+          plotOptions: { bar: { columnWidth: "40%" } }
         }
       },
       {
         // md
         breakpoint: 900,
         options: {
-          plotOptions: { bar: { columnWidth: '32%' } }
+          plotOptions: { bar: { columnWidth: "32%" } }
         }
       }
     ]

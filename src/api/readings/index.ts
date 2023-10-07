@@ -4,28 +4,49 @@ import { HumTempReading, Reading } from "./types";
 
 const playSound = (url: string) => {
   const audio = new Audio(url);
-  audio.play();
+  const resp = audio.play();
+
+  if (resp !== undefined) {
+    resp
+      .then((_) => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 };
 
 const beep =
   "https://res.cloudinary.com/matec-technology-services/video/upload/v1692170386/smartflock/mixkit-appliance-ready-beep-1076_dzhdck.wav";
 
-const checkAndNotify = (value: number) => {
-  if (value > 8) {
-    const noti = new Notification(`SMARTLOCK`, {
-      body: `New notification`,
-      icon: "SMARTLOCK"
-    });
+const clickAndNotify = (noti: Notification) => {
+  noti.onclick = () => {
+    window.open(`/dashboard/overview`);
+    noti.close();
+  };
 
-    noti.onclick = () => {
-      window.open(`/dashboard/overview`);
-      noti.close();
-    };
+  noti.onshow = () => {
+    beep && playSound(beep);
+  };
+};
 
-    noti.onshow = () => {
-      beep && playSound(beep);
-    };
+const checkAndNotifyAmmonia = (latestAmmoniaData: Reading) => {
+  const previousAmmoniaId = localStorage.getItem("latestAmmoniaId");
+  if (
+    previousAmmoniaId !== null &&
+    previousAmmoniaId !== latestAmmoniaData._id
+  ) {
+    const currValue = latestAmmoniaData?.value;
+    if (currValue > 1) {
+      const noti = new Notification(`New Gas Reading Received from SMARTLOCK`, {
+        body: `Ammonia Value: ${latestAmmoniaData.value}`,
+        icon: "SMARTLOCK"
+      });
+
+      clickAndNotify(noti);
+    }
   }
+
+  localStorage.setItem("latestAmmoniaId", latestAmmoniaData._id);
 };
 
 /**
@@ -48,10 +69,12 @@ export const useGetGasReadingsQuery = () =>
   useQuery({
     queryKey: ["gas_reading"],
     queryFn: () => _getGasReadingsRequest(),
-    refetchInterval: 60000,
+    refetchInterval: 30000,
     onSuccess: (data) => {
-      const latestAmmoniaValue = data?.payload?.data?.slice(-1)[0]?.value || 0;
-      checkAndNotify(latestAmmoniaValue);
+      const latestAmmoniaData = data?.payload?.data?.slice(-1)[0];
+      if (latestAmmoniaData) {
+        checkAndNotifyAmmonia(latestAmmoniaData);
+      }
     }
   });
 
@@ -78,6 +101,43 @@ export const useGetWaterLevelQuery = () =>
     refetchInterval: 60000
   });
 
+const checkAndNotifyHumTemp = (latestHumTempData: HumTempReading) => {
+  const previousHumTempId = localStorage.getItem("latestHumTempId");
+  if (
+    previousHumTempId !== null &&
+    previousHumTempId !== latestHumTempData._id
+  ) {
+    const currHumValue = latestHumTempData?.humValue;
+    const currTempValue = latestHumTempData?.tempValue;
+
+    if (currHumValue > 81 || currHumValue < 40) {
+      const noti = new Notification(
+        `New Humidity Reading Received from SMARTLOCK`,
+        {
+          body: `Humidity Value: ${latestHumTempData.humValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+
+      clickAndNotify(noti);
+    }
+
+    if (currTempValue > 30 || currTempValue < 20) {
+      const noti = new Notification(
+        `New Temperature Reading Received from SMARTLOCK`,
+        {
+          body: `Temperature Value: ${latestHumTempData.tempValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+
+      clickAndNotify(noti);
+    }
+  }
+
+  localStorage.setItem("latestHumTempId", latestHumTempData._id);
+};
+
 /**
  * org get all gas reading
  * @returns
@@ -98,5 +158,11 @@ export const useGetHumTempReadingQuery = () =>
   useQuery({
     queryKey: ["hum_temp"],
     queryFn: () => _getHumTempReadingRequest(),
-    refetchInterval: 60000
+    refetchInterval: 60000,
+    onSuccess: (data) => {
+      const latestHumTempData = data?.payload?.data?.slice(-1)[0];
+      if (latestHumTempData) {
+        checkAndNotifyHumTemp(latestHumTempData);
+      }
+    }
   });
