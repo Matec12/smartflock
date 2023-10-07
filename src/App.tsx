@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
-import { useGetGasReadingsQuery } from "./api/readings";
+// import { useGetGasReadingsQuery } from "./api/readings";
 import router from "./router";
 
 export function App() {
