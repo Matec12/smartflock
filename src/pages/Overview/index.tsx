@@ -9,15 +9,10 @@ import {
 } from "@/api/organization";
 import { useGetUsersQuery } from "@/api/user";
 import { useGetCyclesQuery } from "@/api/cycle";
-import {
-  useGetGasReadingsQuery,
-  useGetHumTempReadingQuery,
-  useGetWaterLevelQuery
-} from "@/api/readings";
+import { useGetEnvironmentReadingsQuery } from "@/api/readings";
 import { TemperatureChart } from "./components/TemperatureChart";
 import { HumidityChart } from "./components/HumidityChart";
 import { AmmoniaGasChart } from "./components/AmmoniaGasChart";
-import { WaterLevelChart } from "./components/WaterLevelChart";
 
 const Overview = () => {
   const { user } = useAuth();
@@ -26,11 +21,8 @@ const Overview = () => {
   const { data: cycleData, isLoading: cycleLoader } = useGetCyclesQuery();
   const { data: staffData, isLoading: staffLoader } =
     useGetOrganizationsStaffsQuery(user);
-  const { data: gasData, isLoading: gasLoader } = useGetGasReadingsQuery();
-  const { data: waterLevelData, isLoading: waterLoader } =
-    useGetWaterLevelQuery();
-  const { data: humTempData, isLoading: humTempLoader } =
-    useGetHumTempReadingQuery();
+  const { data: environmentData, isLoading: environmentLoader } =
+    useGetEnvironmentReadingsQuery();
 
   const archivedCycles = cycleData?.payload?.cycles?.filter(
     (cycle) => new Date(cycle.endDate) < new Date()
@@ -103,29 +95,27 @@ const Overview = () => {
         <StatsHorizontal
           icon="ic:twotone-gas-meter"
           iconClassName="bg-primary text-primary"
-          stats={String(gasData?.payload?.data?.slice(-1)[0]?.value)}
+          stats={String(environmentData?.payload?.data?.slice(-1)[0]?.gasValue)}
           statTitle="Gas Level"
-          isLoading={gasLoader}
+          isLoading={environmentLoader}
         />
         <StatsHorizontal
           icon="material-symbols:humidity-mid"
           iconClassName="bg-primary text-primary"
-          stats={String(
-            humTempData?.payload?.data?.slice(-1)[0]?.humValue || 0
-          )}
+          stats={String(environmentData?.payload?.data?.slice(-1)[0]?.humValue)}
           statTitle="Humidity"
-          isLoading={humTempLoader}
+          isLoading={environmentLoader}
         />
         <StatsHorizontal
           icon="solar:temperature-bold-duotone"
           iconClassName="bg-primary text-primary"
           stats={String(
-            humTempData?.payload?.data?.slice(-1)[0]?.tempValue || 0
+            environmentData?.payload?.data?.slice(-1)[0]?.tempValue
           )}
           statTitle="Temperature"
-          isLoading={humTempLoader}
+          isLoading={environmentLoader}
         />
-        <StatsHorizontal
+        {/* <StatsHorizontal
           icon="icon-park-twotone:water-rate-two"
           iconClassName="bg-primary text-primary"
           stats={String(
@@ -133,13 +123,13 @@ const Overview = () => {
           )}
           statTitle="Water Level"
           isLoading={waterLoader}
-        />
+        /> */}
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <AmmoniaGasChart />
         <TemperatureChart />
         <HumidityChart />
-        <WaterLevelChart />
+        {/* <WaterLevelChart /> */}
       </div>
     </Page>
   );

@@ -1,14 +1,16 @@
 import merge from "lodash/merge";
 import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
-import { useGetGasReadingsQuery } from "@/api/readings";
+import { useGetEnvironmentReadingsQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
 import { Card, CardHeader, Skeleton } from "@/components/UI";
 
 const AmmoniaGasChart = () => {
-  const { data, isLoading } = useGetGasReadingsQuery();
+  const { data, isLoading } = useGetEnvironmentReadingsQuery();
 
-  const ammoniaGasData = data?.payload?.data ? data?.payload?.data : [];
+  const ammoniaGasData = data?.payload?.data
+    ? data?.payload?.data.map((data) => data)
+    : [];
 
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
@@ -34,7 +36,7 @@ const AmmoniaGasChart = () => {
   const chartSeries = [
     {
       name: "Ammonia Gas Level",
-      data: ammoniaGasData?.slice(-10).map((item) => item.value)
+      data: ammoniaGasData?.slice(-10).map((item) => item.gasValue)
     }
   ];
 

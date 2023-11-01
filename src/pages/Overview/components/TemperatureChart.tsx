@@ -1,24 +1,16 @@
 import merge from "lodash/merge";
-// import { format } from "date-fns";
+import { format } from "date-fns";
 import ReactApexChart from "react-apexcharts";
-import { useGetHumTempReadingQuery } from "@/api/readings";
+import { useGetEnvironmentReadingsQuery } from "@/api/readings";
 import BaseOptionChart from "@/styles/global-styles";
 import { Card, CardHeader, Skeleton } from "@/components/UI";
 
-// const temperatureData = [
-//   { timestamp: "00:00", humValue: 25 },
-//   { timestamp: "03:00", humValue: 26 },
-//   { timestamp: "06:00", humValue: 27 },
-//   { timestamp: "09:00", humValue: 24 },
-//   { timestamp: "12:00", humValue: 23 },
-//   { timestamp: "15:00", humValue: 22 },
-//   { timestamp: "18:00", humValue: 25 }
-// ];
-
 const TemperatureChart = () => {
-  const { data, isLoading } = useGetHumTempReadingQuery();
+  const { data, isLoading } = useGetEnvironmentReadingsQuery();
 
-  const temperatureData = data?.payload?.data ? data?.payload?.data : [];
+  const temperatureData = data?.payload?.data
+    ? data?.payload?.data.map((data) => data)
+    : [];
 
   const chartOptions = merge(BaseOptionChart(), {
     legend: { position: "top", horizontalAlign: "right" },
@@ -27,7 +19,9 @@ const TemperatureChart = () => {
       height: 350
     },
     xaxis: {
-      categories: temperatureData?.slice(-10)?.map((item) => item.timestamp),
+      categories: temperatureData
+        ?.slice(-10)
+        ?.map((item) => format(new Date(item?.timestamp), "HH:mm")),
       title: {
         text: "Time"
       }
