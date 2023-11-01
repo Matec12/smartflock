@@ -6,10 +6,11 @@ export interface Reading {
   updatedAt: string;
 }
 
-export interface HumTempReading {
+export interface EnvironmentReading {
   _id: string;
   tempValue: number;
   humValue: number;
+  gasValue: number;
   timestamp: string;
   createdAt: string;
   updatedAt: string;

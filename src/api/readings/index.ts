@@ -1,6 +1,6 @@
 import axios from "..";
 import { useQuery } from "@tanstack/react-query";
-import { HumTempReading, Reading } from "./types";
+import { EnvironmentReading } from "./types";
 
 const playSound = (url: string) => {
   const audio = new Audio(url);
@@ -29,77 +29,52 @@ const clickAndNotify = (noti: Notification) => {
   };
 };
 
-const checkAndNotifyAmmonia = (latestAmmoniaData: Reading) => {
-  const previousAmmoniaId = localStorage.getItem("latestAmmoniaId");
+const checkAndNotifyEnviroment = (latestReading: EnvironmentReading) => {
+  const previousEnviromentId = localStorage.getItem("latestEnviromentId");
   if (
-    previousAmmoniaId !== null &&
-    previousAmmoniaId !== latestAmmoniaData._id
+    previousEnviromentId !== null &&
+    previousEnviromentId !== latestReading._id
   ) {
-    const currValue = latestAmmoniaData?.value;
-    if (currValue > 1) {
-      const noti = new Notification(`New Gas Reading Received from SMARTLOCK`, {
-        body: `Ammonia Value: ${latestAmmoniaData.value}`,
-        icon: "SMARTLOCK"
-      });
+    const currGasValue = latestReading?.gasValue;
+    const currTempValue = latestReading?.tempValue;
+    const currHumValue = latestReading?.humValue;
+    
+    if (currGasValue > 60) {
+      const noti = new Notification(
+        `New Environment Reading Received from SMARTLOCK`,
+        {
+          body: `Ammonia Value: ${latestReading.gasValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+      clickAndNotify(noti);
+    }
+    if (currTempValue > 30) {
+      const noti = new Notification(
+        `New Temperature Reading Received from SMARTLOCK`,
+        {
+          body: `Temperature Value: ${latestReading.tempValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+
+      clickAndNotify(noti);
+    }
+    if (currHumValue > 30) {
+      const noti = new Notification(
+        `New Humidity Reading Received from SMARTLOCK`,
+        {
+          body: `Humidity Value: ${latestReading.humValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
 
       clickAndNotify(noti);
     }
   }
 
-  localStorage.setItem("latestAmmoniaId", latestAmmoniaData._id);
+  localStorage.setItem("latestEnviromentId", latestReading._id);
 };
-
-/**
- * org get all gas reading
- * @returns
- */
-const _getGasReadingsRequest = async (): Promise<
-  ApiResponse<{ message: string; data: Reading[] }>
-> => {
-  const { data } = await axios.get("gas_reading");
-  return data;
-};
-
-/**
- * hook wrapper
- * @param user
- * @returns
- */
-export const useGetGasReadingsQuery = () =>
-  useQuery({
-    queryKey: ["gas_reading"],
-    queryFn: () => _getGasReadingsRequest(),
-    refetchInterval: 30000,
-    onSuccess: (data) => {
-      const latestAmmoniaData = data?.payload?.data?.slice(-1)[0];
-      if (latestAmmoniaData) {
-        checkAndNotifyAmmonia(latestAmmoniaData);
-      }
-    }
-  });
-
-/**
- * org get all water level reading
- * @returns
- */
-const _getWaterLevelRequest = async (): Promise<
-  ApiResponse<{ message: string; data: Reading[] }>
-> => {
-  const { data } = await axios.get("water_level");
-  return data;
-};
-
-/**
- * hook wrapper
- * @param user
- * @returns
- */
-export const useGetWaterLevelQuery = () =>
-  useQuery({
-    queryKey: ["water_level"],
-    queryFn: () => _getWaterLevelRequest(),
-    refetchInterval: 60000
-  });
 
 const checkAndNotifyHumTemp = (latestHumTempData: HumTempReading) => {
   const previousHumTempId = localStorage.getItem("latestHumTempId");
@@ -142,27 +117,27 @@ const checkAndNotifyHumTemp = (latestHumTempData: HumTempReading) => {
  * org get all gas reading
  * @returns
  */
-const _getHumTempReadingRequest = async (): Promise<
-  ApiResponse<{ message: string; data: HumTempReading[] }>
+const _getEnvironmentReadingsRequest = async (): Promise<
+  ApiResponse<{ message: string; data: EnvironmentReading[] }>
 > => {
-  const { data } = await axios.get("hum_temp");
+  const { data } = await axios.get("environment_reading");
   return data;
 };
 
 /**
  * hook wrapper
- * @param user
+ * @param environment
  * @returns
  */
-export const useGetHumTempReadingQuery = () =>
+export const useGetEnvironmentReadingsQuery = () =>
   useQuery({
-    queryKey: ["hum_temp"],
-    queryFn: () => _getHumTempReadingRequest(),
-    refetchInterval: 60000,
+    queryKey: ["gas_reading"],
+    queryFn: () => _getEnvironmentReadingsRequest(),
+    refetchInterval: 10000,
     onSuccess: (data) => {
-      const latestHumTempData = data?.payload?.data?.slice(-1)[0];
-      if (latestHumTempData) {
-        checkAndNotifyHumTemp(latestHumTempData);
+      const latestReading = data?.payload?.data?.slice(-1)[0];
+      if (latestReading) {
+        checkAndNotifyEnviroment(latestReading);
       }
     }
   });
