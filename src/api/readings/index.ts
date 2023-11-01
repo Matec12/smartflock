@@ -47,7 +47,6 @@ const checkAndNotifyEnviroment = (latestReading: EnvironmentReading) => {
           icon: "SMARTLOCK"
         }
       );
-
       clickAndNotify(noti);
     }
     if (currTempValue > 30) {
@@ -75,6 +74,43 @@ const checkAndNotifyEnviroment = (latestReading: EnvironmentReading) => {
   }
 
   localStorage.setItem("latestEnviromentId", latestReading._id);
+};
+
+const checkAndNotifyHumTemp = (latestHumTempData: HumTempReading) => {
+  const previousHumTempId = localStorage.getItem("latestHumTempId");
+  if (
+    previousHumTempId !== null &&
+    previousHumTempId !== latestHumTempData._id
+  ) {
+    const currHumValue = latestHumTempData?.humValue;
+    const currTempValue = latestHumTempData?.tempValue;
+
+    if (currHumValue > 81 || currHumValue < 40) {
+      const noti = new Notification(
+        `New Humidity Reading Received from SMARTLOCK`,
+        {
+          body: `Humidity Value: ${latestHumTempData.humValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+
+      clickAndNotify(noti);
+    }
+
+    if (currTempValue > 30 || currTempValue < 20) {
+      const noti = new Notification(
+        `New Temperature Reading Received from SMARTLOCK`,
+        {
+          body: `Temperature Value: ${latestHumTempData.tempValue}`,
+          icon: "SMARTLOCK"
+        }
+      );
+
+      clickAndNotify(noti);
+    }
+  }
+
+  localStorage.setItem("latestHumTempId", latestHumTempData._id);
 };
 
 /**
