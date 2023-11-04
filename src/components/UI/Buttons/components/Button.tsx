@@ -12,18 +12,21 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
-    children,
-    className,
-    disabled: buttonDisabled,
-    isLoading,
-    variant = ButtonVariant.Primary,
-    onClick,
-    outlined = false,
-    flat = false,
-    ghost = false,
-    ...rest
-  }: ButtonProps) => {
+  (
+    {
+      children,
+      className,
+      disabled: buttonDisabled,
+      isLoading,
+      variant = ButtonVariant.Primary,
+      onClick,
+      outlined = false,
+      flat = false,
+      ghost = false,
+      ...rest
+    },
+    ref
+  ) => {
     const [rippleStyle, setRippleStyle] = React.useState<{
       top: number;
       left: number;
@@ -52,6 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
+        ref={ref}
         type="button"
         disabled={disabled}
         className={clsxm(
