@@ -2,7 +2,6 @@ import { Page } from "@/components/Global/Page";
 import { BreadCrumbs, H5 } from "@/components/UI";
 import { useAuth } from "@/hooks";
 import { isAdmin, isOrganization, isOrganizationAdmin } from "@/api/auth/types";
-import { StatsHorizontal } from "@/components/Widgets";
 import {
   useGetOrganizationsQuery,
   useGetOrganizationsStaffsQuery
@@ -10,6 +9,7 @@ import {
 import { useGetUsersQuery } from "@/api/user";
 import { useGetCyclesQuery } from "@/api/cycle";
 import { useGetEnvironmentReadingsQuery } from "@/api/readings";
+import { StatsHorizontal } from "@/components/Widgets";
 import { TemperatureChart } from "./components/TemperatureChart";
 import { HumidityChart } from "./components/HumidityChart";
 import { AmmoniaGasChart } from "./components/AmmoniaGasChart";
@@ -115,21 +115,11 @@ const Overview = () => {
           statTitle="Temperature"
           isLoading={environmentLoader}
         />
-        {/* <StatsHorizontal
-          icon="icon-park-twotone:water-rate-two"
-          iconClassName="bg-primary text-primary"
-          stats={String(
-            waterLevelData?.payload?.data?.slice(-1)[0]?.value || 0
-          )}
-          statTitle="Water Level"
-          isLoading={waterLoader}
-        /> */}
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <AmmoniaGasChart />
         <TemperatureChart />
         <HumidityChart />
-        {/* <WaterLevelChart /> */}
       </div>
     </Page>
   );

@@ -21,7 +21,7 @@ const HumidityChart = () => {
     xaxis: {
       categories: humidityData
         ?.slice(-10)
-        ?.map((item) => format(new Date(item?.timestamp), "HH:mm")),
+        ?.map((item) => format(new Date(item?.timestamp), "MMM dd, HH:mm")),
       title: {
         text: "Time"
       }

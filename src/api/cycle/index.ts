@@ -70,7 +70,6 @@ const _getCyclesRequest = async (
   const baseURL = "cycles";
   const url = buildUrlWithParams(baseURL, { ...params });
   const { data } = await axios.get(url);
-  console.log(data);
   return data;
 };
 
