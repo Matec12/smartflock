@@ -48,7 +48,7 @@ const HumidityChart = () => {
     <Card>
       <CardHeader>Humidity Readings</CardHeader>
 
-      <div className="mt-12 mx-12">
+      <div className="mt-12 mx-6">
         <ReactApexChart
           type="area"
           series={chartSeries}
