@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
-import { useGetEnvironmentReadingsQuery } from "./api/readings";
+// import { useGetEnvironmentReadingsQuery } from "./api/readings";
 
 export function App() {
   useEffect(() => {
@@ -11,8 +11,7 @@ export function App() {
       Notification.requestPermission();
     }
   }, []);
-
-  const {} = useGetEnvironmentReadingsQuery();
+  // const {} = useGetEnvironmentReadingsQuery();
 
   return <RouterProvider router={router} />;
 }

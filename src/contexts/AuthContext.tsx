@@ -150,9 +150,10 @@ function AuthProvider({ children }: AuthProviderProps) {
         if (accessToken) {
           setSession(accessToken);
 
-          const { data } = await axios.get<
-            ApiResponse<{ message: string; user: User }>
-          >("/users/me");
+          const { data } =
+            await axios.get<ApiResponse<{ message: string; user: User }>>(
+              "/users/me"
+            );
           const { user } = data.payload;
 
           dispatch({
