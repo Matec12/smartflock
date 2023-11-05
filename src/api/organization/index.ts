@@ -94,7 +94,7 @@ export const useOrgGetOrganizationsDetailsQuery = (user: User) =>
  * current user get my org
  * @returns
  */
-const _userGetOrganizationsDetailsRequest = async (): Promise<
+export const _userGetOrganizationsDetailsRequest = async (): Promise<
   ApiResponse<{ message: string; organization: Organization }>
 > => {
   const { data } = await axios.get(`organizations/current`);
@@ -109,7 +109,10 @@ const _userGetOrganizationsDetailsRequest = async (): Promise<
 export const useUserGetOrganizationsDetailsQuery = () =>
   useQuery({
     queryKey: ["organization"],
-    queryFn: () => _userGetOrganizationsDetailsRequest()
+    queryFn: () =>
+      _userGetOrganizationsDetailsRequest().then(
+        (res) => res.payload.organization
+      )
   });
 
 // ====================================
@@ -119,7 +122,10 @@ export const useUserGetOrganizationsDetailsQuery = () =>
  * @returns
  */
 const _updateOrganizationRequest = async (
-  payload: Pick<Organization, "name" | "address">
+  payload: Pick<
+    Organization,
+    "name" | "address" | "gasThreshold" | "humThreshold" | "tempThreshold"
+  >
 ): Promise<ApiResponse> => {
   const { data } = await axios.put(`organizations/update`, payload);
   return data;

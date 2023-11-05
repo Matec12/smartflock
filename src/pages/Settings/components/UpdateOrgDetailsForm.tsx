@@ -23,24 +23,30 @@ import {
 
 const UpdateOrgDetailsSchema = z.object({
   name: z.string(),
-  address: z.string()
+  address: z.string(),
+  gasThreshold: z.number(),
+  humThreshold: z.number(),
+  tempThreshold: z.number()
 });
 
 const UpdateOrgDetailsForm = () => {
-  const { data } = useUserGetOrganizationsDetailsQuery();
+  const { data: organization, refetch } = useUserGetOrganizationsDetailsQuery();
   const { mutate: updateOrg, isLoading } = useUpdateOrganizationMutation();
-  console.log({ data });
+
   const form = useForm<z.infer<typeof UpdateOrgDetailsSchema>>({
     mode: "all",
     resolver: zodResolver(UpdateOrgDetailsSchema),
     defaultValues: {
-      name: data?.payload?.organization?.name,
-      address: data?.payload?.organization?.address
+      name: organization?.name,
+      address: organization?.address,
+      gasThreshold: organization?.gasThreshold,
+      humThreshold: organization?.humThreshold,
+      tempThreshold: organization?.tempThreshold
     }
   });
 
   const onSubmit = (values: z.infer<typeof UpdateOrgDetailsSchema>) => {
-    updateOrg(values);
+    updateOrg(values, { onSuccess: () => refetch() });
   };
 
   const {
@@ -52,11 +58,14 @@ const UpdateOrgDetailsForm = () => {
   } = form;
 
   useEffect(() => {
-    if (data) {
-      setValue("name", data?.payload?.organization?.name);
-      setValue("address", data?.payload?.organization?.address);
+    if (organization) {
+      setValue("name", organization?.name);
+      setValue("address", organization?.address);
+      setValue("gasThreshold", organization?.gasThreshold);
+      setValue("humThreshold", organization?.humThreshold);
+      setValue("tempThreshold", organization?.tempThreshold);
     }
-  }, [data, setValue]);
+  }, [organization, setValue]);
 
   return (
     <Card>
@@ -109,6 +118,84 @@ const UpdateOrgDetailsForm = () => {
                         />
                       </FormControl>
                       <FormMessage id="address" />
+                    </FormItem>
+                  )}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormField
+                  control={control}
+                  name="gasThreshold"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>Gas Threshold</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="gasThreshold"
+                          placeholder="1000"
+                          autoComplete="off"
+                          disabled={isLoading}
+                          className={clsxm({
+                            "is-invalid":
+                              errors.gasThreshold && touchedFields.gasThreshold
+                          })}
+                          {...register("gasThreshold", { valueAsNumber: true })}
+                        />
+                      </FormControl>
+                      <FormMessage id="gasThreshold" />
+                    </FormItem>
+                  )}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormField
+                  control={control}
+                  name="humThreshold"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>Humidity Threshold</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="humThreshold"
+                          placeholder="50"
+                          autoComplete="off"
+                          disabled={isLoading}
+                          className={clsxm({
+                            "is-invalid":
+                              errors.humThreshold && touchedFields.humThreshold
+                          })}
+                          {...register("humThreshold", { valueAsNumber: true })}
+                        />
+                      </FormControl>
+                      <FormMessage id="humThreshold" />
+                    </FormItem>
+                  )}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormField
+                  control={control}
+                  name="tempThreshold"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel>Temperature Threshold</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="tempThreshold"
+                          placeholder="45"
+                          autoComplete="off"
+                          disabled={isLoading}
+                          className={clsxm({
+                            "is-invalid":
+                              errors.tempThreshold &&
+                              touchedFields.tempThreshold
+                          })}
+                          {...register("tempThreshold", {
+                            valueAsNumber: true
+                          })}
+                        />
+                      </FormControl>
+                      <FormMessage id="tempThreshold" />
                     </FormItem>
                   )}
                 />

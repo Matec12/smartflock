@@ -5,6 +5,9 @@ export interface Organization {
   name: string;
   address: string;
   admin: User;
+  gasThreshold: number;
+  humThreshold: number;
+  tempThreshold: number;
   createdAt: Date;
   updatedAt: Date;
 }

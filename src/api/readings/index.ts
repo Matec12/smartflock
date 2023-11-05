@@ -1,6 +1,7 @@
 import axios from "..";
 import { useQuery } from "@tanstack/react-query";
 import { EnvironmentReading } from "./types";
+import { _userGetOrganizationsDetailsRequest } from "../organization";
 
 const playSound = (url: string) => {
   const audio = new Audio(url);
@@ -29,51 +30,56 @@ const clickAndNotify = (noti: Notification) => {
   };
 };
 
-const checkAndNotifyEnviroment = (latestReading: EnvironmentReading) => {
-  const previousEnviromentId = localStorage.getItem("latestEnviromentId");
-  if (
-    previousEnviromentId !== null &&
-    previousEnviromentId !== latestReading._id
-  ) {
-    const currGasValue = latestReading?.gasValue;
-    const currTempValue = latestReading?.tempValue;
-    const currHumValue = latestReading?.humValue;
-    
-    if (currGasValue > 60) {
-      const noti = new Notification(
-        `New Environment Reading Received from SMARTLOCK`,
-        {
-          body: `Ammonia Value: ${latestReading.gasValue}`,
-          icon: "SMARTLOCK"
-        }
-      );
-      clickAndNotify(noti);
-    }
-    if (currTempValue > 30) {
-      const noti = new Notification(
-        `New Temperature Reading Received from SMARTLOCK`,
-        {
-          body: `Temperature Value: ${latestReading.tempValue}`,
-          icon: "SMARTLOCK"
-        }
-      );
+const checkAndNotifyEnviroment = async (latestReading: EnvironmentReading) => {
+  try {
+    const res = await _userGetOrganizationsDetailsRequest();
+    const previousEnviromentId = localStorage.getItem("latestEnviromentId");
+    if (
+      previousEnviromentId !== null &&
+      previousEnviromentId !== latestReading._id
+    ) {
+      const currGasValue = latestReading?.gasValue;
+      const currTempValue = latestReading?.tempValue;
+      const currHumValue = latestReading?.humValue;
 
-      clickAndNotify(noti);
-    }
-    if (currHumValue > 30) {
-      const noti = new Notification(
-        `New Humidity Reading Received from SMARTLOCK`,
-        {
-          body: `Humidity Value: ${latestReading.humValue}`,
-          icon: "SMARTLOCK"
-        }
-      );
+      if (currGasValue > res?.payload.organization?.gasThreshold) {
+        const noti = new Notification(
+          `New Environment Reading Received from SMARTLOCK`,
+          {
+            body: `Gas Value: ${latestReading.gasValue}`,
+            icon: "SMARTLOCK"
+          }
+        );
+        clickAndNotify(noti);
+      }
+      if (currTempValue > res?.payload.organization?.tempThreshold) {
+        const noti = new Notification(
+          `New Temperature Reading Received from SMARTLOCK`,
+          {
+            body: `Temperature Value: ${latestReading.tempValue}`,
+            icon: "SMARTLOCK"
+          }
+        );
 
-      clickAndNotify(noti);
+        clickAndNotify(noti);
+      }
+      if (currHumValue > res?.payload.organization?.humThreshold) {
+        const noti = new Notification(
+          `New Humidity Reading Received from SMARTLOCK`,
+          {
+            body: `Humidity Value: ${latestReading.humValue}`,
+            icon: "SMARTLOCK"
+          }
+        );
+
+        clickAndNotify(noti);
+      }
     }
+
+    localStorage.setItem("latestEnviromentId", latestReading._id);
+  } catch (error) {
+    console.log(error);
   }
-
-  localStorage.setItem("latestEnviromentId", latestReading._id);
 };
 
 /**
