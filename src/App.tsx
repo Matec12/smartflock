@@ -11,7 +11,6 @@ export function App() {
       Notification.requestPermission();
     }
   }, []);
-
   // const {} = useGetEnvironmentReadingsQuery();
 
   return <RouterProvider router={router} />;
