@@ -100,7 +100,7 @@ const _getEnvironmentReadingsRequest = async (): Promise<
  */
 export const useGetEnvironmentReadingsQuery = () =>
   useQuery({
-    queryKey: ["gas_reading"],
+    queryKey: ["environment_reading"],
     queryFn: () => _getEnvironmentReadingsRequest(),
     refetchInterval: 10000,
     onSuccess: (data) => {
